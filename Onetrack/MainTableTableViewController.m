@@ -72,6 +72,7 @@
     UILabel *todayLabel = (UILabel *)[cell viewWithTag:2];
     UILabel *totalLabel = (UILabel *)[cell viewWithTag:3];
     UILabel *lastAdded = (UILabel *)[cell viewWithTag:5];
+    UILabel *ratios = (UILabel *)[cell viewWithTag:6];
     UIView *bg = (UIView *)[cell viewWithTag:99];
     bg.layer.cornerRadius = 10;
     itemLabel.text = [item objectForKey:@"name"];
@@ -87,6 +88,14 @@
         [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
         dateFormatter.dateFormat = @"dd/MM/yy hh:mma";
         lastAdded.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
+        NSDate *now = [NSDate date];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:now];
+        NSInteger hour = [components hour];
+        long todayCount = [self getTodayCount:[item objectForKey:@"clicks"]];
+        double todayRatio = todayCount / (float)hour;
+        double totalRatio = ([[item objectForKey:@"clicks"] count]-todayCount) / 24.0f;
+        ratios.text = [NSString stringWithFormat:@"(%.2fp.h. (prev %.2fp.h.))",todayRatio, totalRatio];
     }
     totalLabel.text = [NSString stringWithFormat:@"%d total", (int)[[item objectForKey:@"clicks"] count]];
     return cell;

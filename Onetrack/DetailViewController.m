@@ -40,7 +40,7 @@
     int numberOfHours = 24;
     NSDate *today = [NSDate date];
     NSMutableArray *days = [[NSMutableArray alloc] init];
-    for(int i=0; i<numberOfDays; i++) {
+    for(int i=0; i<=numberOfDays; i++) {
         NSMutableArray *day = [[NSMutableArray alloc] init];
         for (int j=0; j<numberOfHours; j++) {
             NSNumber *randNum = @0;

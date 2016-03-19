@@ -32,7 +32,6 @@
 }
 
 - (IBAction)addTapped:(id)sender {
-    NSLog(@"ZZ %@", self.name.text);
     if(![self.name.text isEqualToString:@""]) {
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
@@ -40,7 +39,6 @@
         if(maxUsage == nil) {
             maxUsage = @0;
         }
-        NSLog(@"%@",maxUsage);
         [self.delegate addCount:self.name.text withMaxUse:maxUsage];
         [self closeTapped:sender];
     }
