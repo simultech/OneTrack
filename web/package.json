@@ -1,0 +1,14 @@
+{
+  "name": "onetrackserver",
+  "version": "1.0.0",
+  "description": "server side of ios project - one track",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew Dekker, Nurmerey Shakhanova",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
