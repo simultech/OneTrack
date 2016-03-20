@@ -93,8 +93,9 @@
         NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:now];
         NSInteger hour = [components hour];
         long todayCount = [self getTodayCount:[item objectForKey:@"clicks"]];
+        long yesterdayCount = [self getYesterdayCount:[item objectForKey:@"clicks"]];
         double todayRatio = todayCount / (float)hour;
-        double totalRatio = ([[item objectForKey:@"clicks"] count]-todayCount) / 24.0f;
+        double totalRatio = yesterdayCount / 24.0f;
         ratios.text = [NSString stringWithFormat:@"(%.2fp.h. (prev %.2fp.h.))",todayRatio, totalRatio];
     }
     totalLabel.text = [NSString stringWithFormat:@"%d total", (int)[[item objectForKey:@"clicks"] count]];
@@ -119,6 +120,25 @@
         }
     }
     return todayCount;
+}
+
+- (long)getYesterdayCount:(NSArray *)counts {
+    long yesterdayCount = 0;
+    for(NSString *dateString in counts) {
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDate *yday = [[NSDate date] dateByAddingTimeInterval:-1*24*60*60];;
+        NSDateComponents *components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:yday];
+        //[components setDay:-1];
+        NSDate *yesterday = [cal dateFromComponents:components];
+        components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[self dateFromString:dateString]];
+        NSDate *otherDate = [cal dateFromComponents:components];
+        if([yesterday isEqualToDate:otherDate]) {
+            //do stuff
+            yesterdayCount += 1;
+        }
+    }
+    NSLog(@"XX %ld",yesterdayCount);
+    return yesterdayCount;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
