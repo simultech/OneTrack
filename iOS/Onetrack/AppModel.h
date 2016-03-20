@@ -24,6 +24,9 @@
 -(void)deleteTracker:(int)index;
 -(void)removeCountFromTracker:(int)index;
 
+- (void)verifyLoginWithSuccess:(void (^)())success andFailure:(void (^)())failure;
+- (NSDictionary *)getUserDetails;
+
 - (long)getTodayCount:(NSArray *)counts;
 - (long)getYesterdayCount:(NSArray *)counts;
 

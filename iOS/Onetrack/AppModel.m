@@ -8,6 +8,8 @@
 
 #import "AppModel.h"
 #import "AFNetworking/AFNetworking.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @implementation AppModel
 
@@ -160,6 +162,44 @@
     gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     return [gmtDateFormatter dateFromString:aString];
+}
+
+- (NSDictionary *)getUserDetails {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *details = [[NSMutableDictionary alloc] init];
+    if([defaults objectForKey:@"user_id"]) {
+        [details setObject:[defaults objectForKey:@"user_id"] forKey:@"user_id"];
+    } else {
+        [details setObject:@"" forKey:@"user_id"];
+    }
+    if([defaults objectForKey:@"user_name"]) {
+        [details setObject:[defaults objectForKey:@"user_name"] forKey:@"user_name"];
+    } else {
+        [details setObject:@"" forKey:@"user_name"];
+    }
+    if([defaults objectForKey:@"user_email"]) {
+        [details setObject:[defaults objectForKey:@"user_email"] forKey:@"user_email"];
+    } else {
+        [details setObject:@"" forKey:@"user_email"];
+    }
+    return [details copy];
+}
+
+- (void)verifyLoginWithSuccess:(void (^)())success andFailure:(void (^)())failure {
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         if (!error) {
+             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+             [defaults setObject:result[@"id"] forKey:@"user_id"];
+             [defaults setObject:result[@"name"] forKey:@"user_name"];
+             [defaults setObject:result[@"email"] forKey:@"user_email"];
+             [defaults synchronize];
+             success();
+         } else {
+             NSLog(@"%@",error);
+             failure();
+         }
+     }];
 }
 
 @end

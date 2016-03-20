@@ -18,35 +18,15 @@
 
 @implementation MainTableTableViewController
 
-- (void)  loginButton:(FBSDKLoginButton *)loginButton
-didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
-                error:(NSError *)error {
-    if ((error) != nil) {
-        // Process error
-    } else if ([result isCancelled]) {
-        // Handle cancellations
-    }
-    else {
-        // Navigate to other view
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             
-             if (!error) {
-                 NSLog(@"fetched user:%@  and Email : %@", result,result[@"email"]);
-             }
-         }];
-    }
-    NSLog(@"%@",result);
-    NSLog(@"LOGGED IN");
-}
-
-- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
-    NSLog(@"LOGGED OUT");
-}
-
 - (void)viewDidLoad {
-    [[AppModel sharedModel] restore];
     [super viewDidLoad];
+    
+    [[AppModel sharedModel] restore];
+    [[AppModel sharedModel] verifyLoginWithSuccess:^{
+        NSLog(@"%@",[[AppModel sharedModel] getUserDetails]);
+    } andFailure:^{
+        [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+    }];
 
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     self.tableView.tableFooterView = [UIView new];
@@ -63,13 +43,6 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
     lpgr.minimumPressDuration = 3.0; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];
-    
-
-    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
-    loginButton.readPermissions = @[@"email", @"user_friends"];
-    loginButton.center = self.view.center;
-    loginButton.delegate = self;
-    [self.view addSubview:loginButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

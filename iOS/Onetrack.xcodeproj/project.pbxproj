@@ -37,6 +37,7 @@
 		A94222521C9EC71E00197CA1 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A94222431C9EC71E00197CA1 /* UIWebView+AFNetworking.m */; };
 		A94222561C9ECC5900197CA1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */; };
 		A942225A1C9ECDB700197CA1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */; };
+		A942225D1C9F513700197CA1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A942225C1C9F513700197CA1 /* LoginViewController.m */; };
 		A9D455B51C97E6E8001CACE3 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D455B41C97E6E8001CACE3 /* CreateViewController.m */; };
 		A9D455B81C97E6F1001CACE3 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D455B71C97E6F1001CACE3 /* DetailViewController.m */; };
 		A9D455F61C984DF3001CACE3 /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9D455F51C984DCB001CACE3 /* fontawesome-webfont.ttf */; };
@@ -130,6 +131,8 @@
 		A94222431C9EC71E00197CA1 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		A942225B1C9F513700197CA1 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		A942225C1C9F513700197CA1 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		A9D455B31C97E6E8001CACE3 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
 		A9D455B41C97E6E8001CACE3 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		A9D455B61C97E6F1001CACE3 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -286,6 +289,8 @@
 				A9D455B41C97E6E8001CACE3 /* CreateViewController.m */,
 				A9D455B61C97E6F1001CACE3 /* DetailViewController.h */,
 				A9D455B71C97E6F1001CACE3 /* DetailViewController.m */,
+				A942225B1C9F513700197CA1 /* LoginViewController.h */,
+				A942225C1C9F513700197CA1 /* LoginViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -587,6 +592,7 @@
 				A92501C51C9DFB3A0031E97E /* JBLineChartDotView.m in Sources */,
 				A9D455B51C97E6E8001CACE3 /* CreateViewController.m in Sources */,
 				A92501BF1C9DFB3A0031E97E /* JBLineChartView.m in Sources */,
+				A942225D1C9F513700197CA1 /* LoginViewController.m in Sources */,
 				A92501BB1C9DFB3A0031E97E /* NSMutableArray+JBStack.m in Sources */,
 				A9F0F11B1C97A30E00EB492A /* MainTableTableViewController.m in Sources */,
 				A9F0F0EB1C97858E00EB492A /* AppDelegate.m in Sources */,
