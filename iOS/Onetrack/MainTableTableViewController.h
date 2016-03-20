@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "CreateViewController.h"
 #import "DetailViewController.h"
 
-@interface MainTableTableViewController : UITableViewController <CreationViewControllerDelegate, DetailViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface MainTableTableViewController : UITableViewController <CreationViewControllerDelegate, DetailViewControllerDelegate, UIGestureRecognizerDelegate, FBSDKLoginButtonDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 

@@ -35,6 +35,8 @@
 		A94222501C9EC71E00197CA1 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A942223F1C9EC71E00197CA1 /* UIProgressView+AFNetworking.m */; };
 		A94222511C9EC71E00197CA1 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A94222411C9EC71E00197CA1 /* UIRefreshControl+AFNetworking.m */; };
 		A94222521C9EC71E00197CA1 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A94222431C9EC71E00197CA1 /* UIWebView+AFNetworking.m */; };
+		A94222561C9ECC5900197CA1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */; };
+		A942225A1C9ECDB700197CA1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */; };
 		A9D455B51C97E6E8001CACE3 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D455B41C97E6E8001CACE3 /* CreateViewController.m */; };
 		A9D455B81C97E6F1001CACE3 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D455B71C97E6F1001CACE3 /* DetailViewController.m */; };
 		A9D455F61C984DF3001CACE3 /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9D455F51C984DCB001CACE3 /* fontawesome-webfont.ttf */; };
@@ -126,6 +128,8 @@
 		A94222411C9EC71E00197CA1 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		A94222421C9EC71E00197CA1 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		A94222431C9EC71E00197CA1 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../Documents/FacebookSDKs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		A9D455B31C97E6E8001CACE3 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
 		A9D455B41C97E6E8001CACE3 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		A9D455B61C97E6F1001CACE3 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D455F81C993CA2001CACE3 /* AudioToolbox.framework in Frameworks */,
+				A94222561C9ECC5900197CA1 /* FBSDKCoreKit.framework in Frameworks */,
+				A942225A1C9ECDB700197CA1 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +368,8 @@
 		A9F0F0DA1C97858E00EB492A = {
 			isa = PBXGroup;
 			children = (
+				A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */,
+				A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */,
 				A9D455F71C993CA2001CACE3 /* AudioToolbox.framework */,
 				A9F0F0E51C97858E00EB492A /* Onetrack */,
 				A9F0F0FF1C97858F00EB492A /* OnetrackTests */,
@@ -730,6 +738,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Onetrack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.simultech.Onetrack;
@@ -744,6 +756,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Onetrack/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.simultech.Onetrack;
