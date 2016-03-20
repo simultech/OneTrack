@@ -10,10 +10,6 @@
 
 @protocol CreationViewControllerDelegate
 
-// define protocol functions that can be used in any class using this delegate
--(void)addCount:(NSString *)name withMaxUse:(NSNumber *)usePerDay;
--(void)resetAll;
-
 @end
 
 @interface CreateViewController : UIViewController

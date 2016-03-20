@@ -13,9 +13,6 @@
 
 @protocol DetailViewControllerDelegate
 
-// define protocol functions that can be used in any class using this delegate
--(void)resetAll;
-
 @end
 
 

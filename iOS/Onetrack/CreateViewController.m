@@ -7,6 +7,7 @@
 //
 
 #import "CreateViewController.h"
+#import "AppModel.h"
 
 @interface CreateViewController ()
 
@@ -39,13 +40,13 @@
         if(maxUsage == nil) {
             maxUsage = @0;
         }
-        [self.delegate addCount:self.name.text withMaxUse:maxUsage];
+        [[AppModel sharedModel] addTracker:self.name.text withMaxUse:maxUsage];
         [self closeTapped:sender];
     }
 }
 
 - (IBAction)resetTapped:(id)sender {
-    [self.delegate resetAll];
+    [[AppModel sharedModel] resetAll];
 }
 
 /*

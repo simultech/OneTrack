@@ -12,11 +12,8 @@
 
 @interface MainTableTableViewController : UITableViewController <CreationViewControllerDelegate, DetailViewControllerDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) NSArray *items;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
-- (NSString *)stringFromDate:(NSDate *)aDate;
-- (NSDate *)dateFromString:(NSString *)aString;
 - (IBAction)editingClicked:(id)sender;
 
 @end

@@ -96,7 +96,7 @@
                                 <action selector="editingClicked:" destination="PKg-68-hjz" id="6Bl-Pz-Y8W"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Create Counter" id="sfR-3t-wmF">
+                        <barButtonItem key="rightBarButtonItem" title="Create Tracker" id="sfR-3t-wmF">
                             <color key="tintColor" red="0.58194276676683465" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="z8d-HC-iYU" kind="presentation" identifier="CreateSegue" id="Ijg-HT-IzI"/>
@@ -111,7 +111,7 @@
             </objects>
             <point key="canvasLocation" x="642" y="546"/>
         </scene>
-        <!--Create Counter-->
+        <!--Create Tracker-->
         <scene sceneID="lym-gB-Zii">
             <objects>
                 <viewController id="RxG-iF-cEX" customClass="CreateViewController" sceneMemberID="viewController">
@@ -172,7 +172,7 @@
                             <constraint firstItem="NK2-n3-xdN" firstAttribute="centerY" secondItem="gv5-Dx-6SI" secondAttribute="centerY" id="vDB-kM-69u"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Create Counter" id="i7m-9I-MZy">
+                    <navigationItem key="navigationItem" title="Create Tracker" id="i7m-9I-MZy">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="O9H-lh-h0W">
                             <color key="tintColor" red="0.58194276680000001" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>

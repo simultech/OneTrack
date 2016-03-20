@@ -9,6 +9,7 @@
 #import "MainTableTableViewController.h"
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioServices.h>
+#import "AppModel.h"
 
 
 @interface MainTableTableViewController ()
@@ -18,7 +19,7 @@
 @implementation MainTableTableViewController
 
 - (void)viewDidLoad {
-    [self restore];
+    [[AppModel sharedModel] restore];
     [super viewDidLoad];
 
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
@@ -33,13 +34,18 @@
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 5.0; //seconds
+    lpgr.minimumPressDuration = 3.0; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"APPEARING");
+    [self.tableView reloadData];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row < self.items.count) {
+    if(indexPath.row < [[AppModel sharedModel] items].count) {
         return 120.0f;
     }
     return 0.0f;
@@ -57,11 +63,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.items count];
+    return [[[AppModel sharedModel] items] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *item = [self.items objectAtIndex:indexPath.row];
+    NSDictionary *item = [(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"defaultCell" forIndexPath:indexPath];
     NSNumber *maxCount = [item objectForKey:@"maxCount"];
     [cell setBackgroundColor:[AppDelegate colorFromHexString:@"#fafafa"]];
@@ -77,13 +83,14 @@
     bg.layer.cornerRadius = 10;
     itemLabel.text = [item objectForKey:@"name"];
     if([maxCount integerValue] == 0) {
-        todayLabel.text = [NSString stringWithFormat:@"%ld today", [self getTodayCount:[item objectForKey:@"clicks"]]];
+        todayLabel.text = [NSString stringWithFormat:@"%ld today", [[AppModel sharedModel] getTodayCount:[item objectForKey:@"clicks"]]];
     } else {
-        todayLabel.text = [NSString stringWithFormat:@"(%ld / %@) today", [self getTodayCount:[item objectForKey:@"clicks"]], maxCount];
+        todayLabel.text = [NSString stringWithFormat:@"(%ld / %@) today", [[AppModel sharedModel] getTodayCount:[item objectForKey:@"clicks"]], maxCount];
     }
     lastAdded.text = @"";
+    ratios.text = @"";
     if([[item objectForKey:@"clicks"] count] > 0) {
-        NSDate *date = [self dateFromString:[[item objectForKey:@"clicks"] lastObject]];
+        NSDate *date = [[AppModel sharedModel] dateFromString:[[item objectForKey:@"clicks"] lastObject]];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
         dateFormatter.dateFormat = @"dd/MM/yy hh:mma";
@@ -92,8 +99,8 @@
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:now];
         NSInteger hour = [components hour];
-        long todayCount = [self getTodayCount:[item objectForKey:@"clicks"]];
-        long yesterdayCount = [self getYesterdayCount:[item objectForKey:@"clicks"]];
+        long todayCount = [[AppModel sharedModel] getTodayCount:[item objectForKey:@"clicks"]];
+        long yesterdayCount = [[AppModel sharedModel] getYesterdayCount:[item objectForKey:@"clicks"]];
         double todayRatio = todayCount / (float)hour;
         double totalRatio = yesterdayCount / 24.0f;
         ratios.text = [NSString stringWithFormat:@"(%.2fp.h. (prev %.2fp.h.))",todayRatio, totalRatio];
@@ -106,71 +113,11 @@
     cell.backgroundView.backgroundColor = [AppDelegate colorFromHexString:@"#eeeeee"];
 }
 
-- (long)getTodayCount:(NSArray *)counts {
-    long todayCount = 0;
-    for(NSString *dateString in counts) {
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        NSDateComponents *components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
-        NSDate *today = [cal dateFromComponents:components];
-        components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[self dateFromString:dateString]];
-        NSDate *otherDate = [cal dateFromComponents:components];
-        if([today isEqualToDate:otherDate]) {
-            //do stuff
-            todayCount += 1;
-        }
-    }
-    return todayCount;
-}
-
-- (long)getYesterdayCount:(NSArray *)counts {
-    long yesterdayCount = 0;
-    for(NSString *dateString in counts) {
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        NSDate *yday = [[NSDate date] dateByAddingTimeInterval:-1*24*60*60];;
-        NSDateComponents *components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:yday];
-        //[components setDay:-1];
-        NSDate *yesterday = [cal dateFromComponents:components];
-        components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[self dateFromString:dateString]];
-        NSDate *otherDate = [cal dateFromComponents:components];
-        if([yesterday isEqualToDate:otherDate]) {
-            //do stuff
-            yesterdayCount += 1;
-        }
-    }
-    NSLog(@"XX %ld",yesterdayCount);
-    return yesterdayCount;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [[UIDevice currentDevice] playInputClick];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    NSMutableArray *mutableItems = [self.items mutableCopy];
-    NSMutableDictionary *item = [[mutableItems objectAtIndex:indexPath.row] mutableCopy];
-    NSNumber *maxCount = [item objectForKey:@"maxCount"];
-    NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
-    NSDate *now = [NSDate date];
-    if([maxCount integerValue] == 0 || [maxCount longValue] > [self getTodayCount:clicks]) {
-        [clicks addObject:[self stringFromDate:now]];
-        [item setObject:[clicks copy] forKey:@"clicks"];
-        [mutableItems replaceObjectAtIndex:indexPath.row withObject:[item copy]];
-        self.items = [mutableItems copy];
-        [self.tableView reloadData];
-        [self save];
-    }
-}
-
-- (NSString *)stringFromDate:(NSDate *)aDate {
-    NSDateFormatter *gmtDateFormatter = [[NSDateFormatter alloc] init];
-    gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    return [gmtDateFormatter stringFromDate:aDate];
-}
-
-- (NSDate *)dateFromString:(NSString *)aString {
-    NSDateFormatter *gmtDateFormatter = [[NSDateFormatter alloc] init];
-    gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    return [gmtDateFormatter dateFromString:aString];
+    [[AppModel sharedModel] addCountToTracker:(int)indexPath.row];
+    [self.tableView reloadData];
 }
 
 - (IBAction)editingClicked:(id)sender {
@@ -181,16 +128,6 @@
         [self.tableView setEditing: YES animated: YES];
         self.editButton.title = @"Finish Editing";
     }
-}
-
--(void)addCount:(NSString *)name withMaxUse:(NSNumber *)usePerDay {
-    NSMutableArray *mutableItems = [self.items mutableCopy];
-    NSDictionary *item = @{@"name" : name, @"clicks" : @[], @"maxCount": usePerDay};
-    [mutableItems addObject:item];
-    NSLog(@"ADDING NEW");
-    self.items = [mutableItems copy];
-    [self.tableView reloadData];
-    [self save];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -206,31 +143,8 @@
         DetailViewController *vc = [segue destinationViewController];
         vc.delegate = self;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        vc.data = [self.items objectAtIndex:indexPath.row];
+        vc.data = [(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row];
     }
-}
-
--(void)save {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"dataz.txt"];
-    [NSKeyedArchiver archiveRootObject:self.items toFile:appFile];
-}
-
--(void)restore {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"dataz.txt"];
-    self.items = [NSKeyedUnarchiver unarchiveObjectWithFile:appFile];
-    if(!self.items) {
-        self.items = [[NSArray alloc] init];
-    }
-}
-
--(void)resetAll {
-    self.items = @[];
-    [self save];
-    [self.tableView reloadData];
 }
 
 // Override to support conditional editing of the table view.
@@ -244,22 +158,14 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         NSLog(@"DELETING");
-        NSMutableArray *mutableItems = [self.items mutableCopy];
-        [mutableItems removeObjectAtIndex:indexPath.row];
-        self.items = [mutableItems copy];
-        [self save];
+        [[AppModel sharedModel] deleteTracker:(int)indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    NSMutableArray *mutableItems = [self.items mutableCopy];
-    NSDictionary *item = [self.items objectAtIndex:fromIndexPath.row];
-    [mutableItems removeObjectAtIndex:fromIndexPath.row];
-    [mutableItems insertObject:item atIndex:toIndexPath.row];
-    [self save];
-    self.items = [mutableItems copy];
+    [[AppModel sharedModel] moveTrackerFrom:(int)fromIndexPath.row to:(int)toIndexPath.row];
 }
 
 // Override to support conditional rearranging of the table view.
@@ -275,17 +181,8 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     
     if(indexPath != nil) {
-        NSMutableArray *mutableItems = [self.items mutableCopy];
-        NSMutableDictionary *item = [[mutableItems objectAtIndex:indexPath.row] mutableCopy];
-        NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
-        if(clicks.count > 0) {
-            [clicks removeObjectAtIndex:clicks.count-1];
-            [item setObject:[clicks copy] forKey:@"clicks"];
-            [mutableItems replaceObjectAtIndex:indexPath.row withObject:[item copy]];
-            self.items = [mutableItems copy];
-        }
+        [[AppModel sharedModel] removeCountFromTracker:(int)indexPath.row];
         [self.tableView reloadData];
-        [self save];
     }
 }
 
@@ -296,7 +193,6 @@
         CGPoint p = [sender locationInView:self.tableView];
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
         if(indexPath != nil) {
-            NSLog(@"long press on table view at row %ld", indexPath.row);
             UIAlertController * alert=   [UIAlertController
                                           alertControllerWithTitle:@"Reset counter"
                                           message:@"Do you want to reset this counter?  All entries will be removed."
@@ -306,13 +202,8 @@
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
-                                     NSMutableArray *theItems = [self.items mutableCopy];
-                                     NSMutableDictionary *theItem = [[self.items objectAtIndex:indexPath.row] mutableCopy];
-                                     [theItem setObject:@[] forKey:@"clicks"];
-                                     [theItems replaceObjectAtIndex:indexPath.row withObject:[theItem copy]];
-                                     self.items = [theItems copy];
+                                     [[AppModel sharedModel] resetTracker:(int)indexPath.row];
                                      [self.tableView reloadData];
-                                     [self save];
                                      [alert dismissViewControllerAnimated:YES completion:nil];
                                      
                                  }];
@@ -330,15 +221,5 @@
         }
     }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
