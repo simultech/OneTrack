@@ -11,7 +11,6 @@
 #import <AudioToolbox/AudioServices.h>
 #import "AppModel.h"
 
-
 @interface MainTableTableViewController ()
 
 @end
@@ -22,6 +21,14 @@
     [super viewDidLoad];
     
     [[AppModel sharedModel] restore];
+    
+    if ([WCSession isSupported]) {
+        self.session = [WCSession defaultSession];
+        self.session.delegate = self;
+        [self.session activateSession];
+        NSLog(@"ACTIVATING SESSION");
+    }
+    
     [[AppModel sharedModel] verifyLoginWithSuccess:^{
         NSLog(@"%@",[[AppModel sharedModel] getUserDetails]);
     } andFailure:^{
@@ -43,6 +50,12 @@
     lpgr.minimumPressDuration = 3.0; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];
+}
+
+- (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message {
+    NSLog(@"RECEIVED ON PHONE");
+    NSString *counterValue = [message objectForKey:@"counterValue"];
+    NSLog(@"FOUND ME A %@", counterValue);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -122,8 +135,57 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [[UIDevice currentDevice] playInputClick];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    [[AppModel sharedModel] addCountToTracker:(int)indexPath.row];
+    BOOL added = [[AppModel sharedModel] addCountToTracker:(int)indexPath.row];
+    
+    if ([self.session isReachable]) {
+        NSLog(@"IS REACHABLE");
+        NSString *counterString = [NSString stringWithFormat:@"%d", 4];
+        NSDictionary *applicationData = [[NSDictionary alloc] initWithObjects:@[counterString] forKeys:@[@"counterValue"]];
+        [self.session sendMessage:applicationData
+                     replyHandler:^(NSDictionary *reply) {
+                         NSLog(@"GOT REPLY");
+                         //handle reply from iPhone app here
+                     }
+                     errorHandler:^(NSError *error) {
+                         NSLog(@"GOT ERROR %@", error);
+                         //catch any errors here
+                     }
+         ];
+    } else {
+        NSLog(@"IS NOT REACHABLE");
+    }
+    
     [self.tableView reloadData];
+    if(added) {
+        [self animateIndexPath:indexPath withType:@"success"];
+    } else {
+        [self animateIndexPath:indexPath withType:@"limit"];
+    }
+}
+
+- (void)animateIndexPath:(NSIndexPath *)indexPath withType:(NSString *)type {
+    if([type isEqualToString:@"success"]) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        [UIView animateWithDuration:0.1 animations:^{
+            cell.layer.backgroundColor = [UIColor greenColor].CGColor;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.4 animations:^{
+                cell.layer.backgroundColor = [UIColor whiteColor].CGColor;
+            } completion:nil];
+        }];
+    }
+    if([type isEqualToString:@"limit"]) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        cell.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        [UIView animateWithDuration:0.1 animations:^{
+            cell.layer.backgroundColor = [UIColor grayColor].CGColor;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.4 animations:^{
+                cell.layer.backgroundColor = [UIColor whiteColor].CGColor;
+            } completion:nil];
+        }];
+    }
 }
 
 - (IBAction)editingClicked:(id)sender {

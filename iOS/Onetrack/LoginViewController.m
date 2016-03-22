@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.messageLabel.text = @"";
     FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
     loginButton.readPermissions = @[@"email", @"user_friends"];
     loginButton.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height - 40);
@@ -27,22 +28,21 @@
 - (void)  loginButton:(FBSDKLoginButton *)loginButton
 didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
                 error:(NSError *)error {
+    self.messageLabel.text = @"";
     if ((error) != nil) {
-        // Process error
+        NSLog(@"THERE WAS AN ERROR %@", error);
+        self.messageLabel.text = [NSString stringWithFormat:@"%@", error];
     } else if ([result isCancelled]) {
-        // Handle cancellations
-    }
-    else {
-        // Navigate to other view
-        [self dismissViewControllerAnimated:YES completion:^{
-            NSLog(@"REMOVED");
-        }];
+        self.messageLabel.text = @"Login cancelled, please try again";
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     NSLog(@"%@",result);
     NSLog(@"LOGGED IN");
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
+    self.messageLabel.text = @"You have been logged out";
     NSLog(@"LOGGED OUT");
 }
 

@@ -12,5 +12,6 @@
 
 @interface LoginViewController : UIViewController <FBSDKLoginButtonDelegate>
 @property (weak, nonatomic) IBOutlet UIView *buttonView;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end

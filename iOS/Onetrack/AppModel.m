@@ -55,7 +55,8 @@
     [self save];
 }
 
--(void)addCountToTracker:(int)index {
+-(BOOL)addCountToTracker:(int)index {
+    BOOL completed = NO;
     NSMutableArray *mutableItems = [self.items mutableCopy];
     NSMutableDictionary *item = [[mutableItems objectAtIndex:index] mutableCopy];
     NSNumber *maxCount = [item objectForKey:@"maxCount"];
@@ -67,14 +68,17 @@
         [mutableItems replaceObjectAtIndex:index withObject:[item copy]];
         [self setItems:[mutableItems copy]];
         [self save];
+        completed = YES;
     }
+    return completed;
 }
 
 -(void)removeCountFromTracker:(int)index {
     NSMutableArray *mutableItems = [self.items mutableCopy];
     NSMutableDictionary *item = [[mutableItems objectAtIndex:index] mutableCopy];
     NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
-    if(clicks.count > 0) {
+    NSNumber *maxCount = [item objectForKey:@"maxCount"];
+    if(clicks.count > 0 && ([maxCount integerValue] == 0 || [self getTodayCount:clicks] > 0)) {
         [clicks removeObjectAtIndex:clicks.count-1];
         [item setObject:[clicks copy] forKey:@"clicks"];
         [mutableItems replaceObjectAtIndex:index withObject:[item copy]];

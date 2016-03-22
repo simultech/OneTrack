@@ -33,7 +33,23 @@
                             </pageControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crs-iN-avL">
                                 <rect key="frame" x="20" y="527" width="560" height="65"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have been logged out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBs-Yj-Odr">
+                                        <rect key="frame" x="181" y="0.0" width="199" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="199" id="9Br-Mo-oJ7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.019837646804735889" green="0.36319944371727753" blue="0.041989122155192939" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="dBs-Yj-Odr" secondAttribute="bottom" constant="44" id="fAk-Iv-7yx"/>
+                                    <constraint firstItem="dBs-Yj-Odr" firstAttribute="top" secondItem="crs-iN-avL" secondAttribute="top" id="fTg-ua-qNG"/>
+                                    <constraint firstItem="dBs-Yj-Odr" firstAttribute="centerX" secondItem="crs-iN-avL" secondAttribute="centerX" id="l9e-02-keB"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -54,6 +70,7 @@
                     </view>
                     <connections>
                         <outlet property="buttonView" destination="crs-iN-avL" id="VnP-Ud-vqw"/>
+                        <outlet property="messageLabel" destination="dBs-Yj-Odr" id="Vvq-2S-KXd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc9-0t-Heb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -123,7 +140,6 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.50396165780141844" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="JF6-pW-cnS" secondAttribute="trailing" constant="-8" id="23G-pI-ngK"/>
                                         <constraint firstItem="Yak-ak-vMe" firstAttribute="leading" secondItem="A4h-1u-6gT" secondAttribute="leading" id="9W3-XI-TxR"/>
@@ -358,6 +374,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="mrL-9y-48Q"/>
+        <segue reference="usr-UJ-I0Q"/>
     </inferredMetricsTieBreakers>
 </document>

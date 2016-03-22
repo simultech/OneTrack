@@ -38,6 +38,14 @@
 		A94222561C9ECC5900197CA1 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */; };
 		A942225A1C9ECDB700197CA1 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */; };
 		A942225D1C9F513700197CA1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A942225C1C9F513700197CA1 /* LoginViewController.m */; };
+		A96FC4321CA092630045BD43 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96FC4301CA092630045BD43 /* Interface.storyboard */; };
+		A96FC4341CA092630045BD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A96FC4331CA092630045BD43 /* Assets.xcassets */; };
+		A96FC43B1CA092630045BD43 /* Onetrack Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A96FC43A1CA092630045BD43 /* Onetrack Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A96FC4411CA092630045BD43 /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = A96FC4401CA092630045BD43 /* InterfaceController.m */; };
+		A96FC4441CA092630045BD43 /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A96FC4431CA092630045BD43 /* ExtensionDelegate.m */; };
+		A96FC4461CA092630045BD43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A96FC4451CA092630045BD43 /* Assets.xcassets */; };
+		A96FC44A1CA092630045BD43 /* Onetrack Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A96FC42E1CA092630045BD43 /* Onetrack Watch.app */; };
+		A99D8B581CA0A91F009D3372 /* WatchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A99D8B571CA0A91F009D3372 /* WatchTableCell.m */; };
 		A9D455B51C97E6E8001CACE3 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D455B41C97E6E8001CACE3 /* CreateViewController.m */; };
 		A9D455B81C97E6F1001CACE3 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D455B71C97E6F1001CACE3 /* DetailViewController.m */; };
 		A9D455F61C984DF3001CACE3 /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9D455F51C984DCB001CACE3 /* fontawesome-webfont.ttf */; };
@@ -53,6 +61,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A96FC43C1CA092630045BD43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9F0F0DB1C97858E00EB492A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A96FC4391CA092630045BD43;
+			remoteInfo = "Onetrack Watch Extension";
+		};
+		A96FC4481CA092630045BD43 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9F0F0DB1C97858E00EB492A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A96FC42D1CA092630045BD43;
+			remoteInfo = "Onetrack Watch";
+		};
 		A9F0F0FD1C97858F00EB492A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9F0F0DB1C97858E00EB492A /* Project object */;
@@ -68,6 +90,31 @@
 			remoteInfo = Onetrack;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A96FC4501CA092630045BD43 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A96FC43B1CA092630045BD43 /* Onetrack Watch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A96FC4521CA092630045BD43 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A96FC44A1CA092630045BD43 /* Onetrack Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A925019C1C9DFB3A0031E97E /* NSMutableArray+JBStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+JBStack.h"; sourceTree = "<group>"; };
@@ -133,6 +180,19 @@
 		A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		A942225B1C9F513700197CA1 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		A942225C1C9F513700197CA1 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		A96FC42E1CA092630045BD43 /* Onetrack Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Onetrack Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A96FC4311CA092630045BD43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		A96FC4331CA092630045BD43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A96FC4351CA092630045BD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A96FC43A1CA092630045BD43 /* Onetrack Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Onetrack Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A96FC43F1CA092630045BD43 /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
+		A96FC4401CA092630045BD43 /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
+		A96FC4421CA092630045BD43 /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
+		A96FC4431CA092630045BD43 /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
+		A96FC4451CA092630045BD43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A96FC4471CA092630045BD43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A99D8B561CA0A91F009D3372 /* WatchTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchTableCell.h; sourceTree = "<group>"; };
+		A99D8B571CA0A91F009D3372 /* WatchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchTableCell.m; sourceTree = "<group>"; };
 		A9D455B31C97E6E8001CACE3 /* CreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateViewController.h; sourceTree = "<group>"; };
 		A9D455B41C97E6E8001CACE3 /* CreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateViewController.m; sourceTree = "<group>"; };
 		A9D455B61C97E6F1001CACE3 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -158,6 +218,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A96FC4371CA092630045BD43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9F0F0E01C97858E00EB492A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -360,6 +427,31 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		A96FC42F1CA092630045BD43 /* Onetrack Watch */ = {
+			isa = PBXGroup;
+			children = (
+				A96FC4301CA092630045BD43 /* Interface.storyboard */,
+				A96FC4331CA092630045BD43 /* Assets.xcassets */,
+				A96FC4351CA092630045BD43 /* Info.plist */,
+			);
+			path = "Onetrack Watch";
+			sourceTree = "<group>";
+		};
+		A96FC43E1CA092630045BD43 /* Onetrack Watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A96FC43F1CA092630045BD43 /* InterfaceController.h */,
+				A96FC4401CA092630045BD43 /* InterfaceController.m */,
+				A96FC4421CA092630045BD43 /* ExtensionDelegate.h */,
+				A96FC4431CA092630045BD43 /* ExtensionDelegate.m */,
+				A96FC4451CA092630045BD43 /* Assets.xcassets */,
+				A96FC4471CA092630045BD43 /* Info.plist */,
+				A99D8B561CA0A91F009D3372 /* WatchTableCell.h */,
+				A99D8B571CA0A91F009D3372 /* WatchTableCell.m */,
+			);
+			path = "Onetrack Watch Extension";
+			sourceTree = "<group>";
+		};
 		A9D455C31C9830A5001CACE3 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +471,8 @@
 				A9F0F0E51C97858E00EB492A /* Onetrack */,
 				A9F0F0FF1C97858F00EB492A /* OnetrackTests */,
 				A9F0F10A1C97858F00EB492A /* OnetrackUITests */,
+				A96FC42F1CA092630045BD43 /* Onetrack Watch */,
+				A96FC43E1CA092630045BD43 /* Onetrack Watch Extension */,
 				A9F0F0E41C97858E00EB492A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -389,6 +483,8 @@
 				A9F0F0E31C97858E00EB492A /* Onetrack.app */,
 				A9F0F0FC1C97858F00EB492A /* OnetrackTests.xctest */,
 				A9F0F1071C97858F00EB492A /* OnetrackUITests.xctest */,
+				A96FC42E1CA092630045BD43 /* Onetrack Watch.app */,
+				A96FC43A1CA092630045BD43 /* Onetrack Watch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -439,6 +535,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A96FC42D1CA092630045BD43 /* Onetrack Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A96FC4511CA092630045BD43 /* Build configuration list for PBXNativeTarget "Onetrack Watch" */;
+			buildPhases = (
+				A96FC42C1CA092630045BD43 /* Resources */,
+				A96FC4501CA092630045BD43 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A96FC43D1CA092630045BD43 /* PBXTargetDependency */,
+			);
+			name = "Onetrack Watch";
+			productName = "Onetrack Watch";
+			productReference = A96FC42E1CA092630045BD43 /* Onetrack Watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		A96FC4391CA092630045BD43 /* Onetrack Watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A96FC44F1CA092630045BD43 /* Build configuration list for PBXNativeTarget "Onetrack Watch Extension" */;
+			buildPhases = (
+				A96FC4361CA092630045BD43 /* Sources */,
+				A96FC4371CA092630045BD43 /* Frameworks */,
+				A96FC4381CA092630045BD43 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Onetrack Watch Extension";
+			productName = "Onetrack Watch Extension";
+			productReference = A96FC43A1CA092630045BD43 /* Onetrack Watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		A9F0F0E21C97858E00EB492A /* Onetrack */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9F0F1101C97858F00EB492A /* Build configuration list for PBXNativeTarget "Onetrack" */;
@@ -446,10 +576,12 @@
 				A9F0F0DF1C97858E00EB492A /* Sources */,
 				A9F0F0E01C97858E00EB492A /* Frameworks */,
 				A9F0F0E11C97858E00EB492A /* Resources */,
+				A96FC4521CA092630045BD43 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A96FC4491CA092630045BD43 /* PBXTargetDependency */,
 			);
 			name = Onetrack;
 			productName = Onetrack;
@@ -501,6 +633,13 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Andrew Dekker";
 				TargetAttributes = {
+					A96FC42D1CA092630045BD43 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = X4J3AMW696;
+					};
+					A96FC4391CA092630045BD43 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
 					A9F0F0E21C97858E00EB492A = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = X4J3AMW696;
@@ -531,11 +670,30 @@
 				A9F0F0E21C97858E00EB492A /* Onetrack */,
 				A9F0F0FB1C97858F00EB492A /* OnetrackTests */,
 				A9F0F1061C97858F00EB492A /* OnetrackUITests */,
+				A96FC42D1CA092630045BD43 /* Onetrack Watch */,
+				A96FC4391CA092630045BD43 /* Onetrack Watch Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A96FC42C1CA092630045BD43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A96FC4341CA092630045BD43 /* Assets.xcassets in Resources */,
+				A96FC4321CA092630045BD43 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A96FC4381CA092630045BD43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A96FC4461CA092630045BD43 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9F0F0E11C97858E00EB492A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -564,6 +722,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A96FC4361CA092630045BD43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A96FC4441CA092630045BD43 /* ExtensionDelegate.m in Sources */,
+				A99D8B581CA0A91F009D3372 /* WatchTableCell.m in Sources */,
+				A96FC4411CA092630045BD43 /* InterfaceController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9F0F0DF1C97858E00EB492A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -624,6 +792,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A96FC43D1CA092630045BD43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A96FC4391CA092630045BD43 /* Onetrack Watch Extension */;
+			targetProxy = A96FC43C1CA092630045BD43 /* PBXContainerItemProxy */;
+		};
+		A96FC4491CA092630045BD43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A96FC42D1CA092630045BD43 /* Onetrack Watch */;
+			targetProxy = A96FC4481CA092630045BD43 /* PBXContainerItemProxy */;
+		};
 		A9F0F0FE1C97858F00EB492A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9F0F0E21C97858E00EB492A /* Onetrack */;
@@ -637,6 +815,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A96FC4301CA092630045BD43 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A96FC4311CA092630045BD43 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		A9F0F0EF1C97858F00EB492A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -656,6 +842,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A96FC44B1CA092630045BD43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				IBSC_MODULE = Onetrack_Watch_Extension;
+				INFOPLIST_FILE = "Onetrack Watch/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.simultech.Onetrack.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		A96FC44C1CA092630045BD43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				IBSC_MODULE = Onetrack_Watch_Extension;
+				INFOPLIST_FILE = "Onetrack Watch/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = net.simultech.Onetrack.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		A96FC44D1CA092630045BD43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Onetrack Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.simultech.Onetrack.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		A96FC44E1CA092630045BD43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Onetrack Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.simultech.Onetrack.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
 		A9F0F10E1C97858F00EB492A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -825,6 +1073,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A96FC44F1CA092630045BD43 /* Build configuration list for PBXNativeTarget "Onetrack Watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A96FC44D1CA092630045BD43 /* Debug */,
+				A96FC44E1CA092630045BD43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A96FC4511CA092630045BD43 /* Build configuration list for PBXNativeTarget "Onetrack Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A96FC44B1CA092630045BD43 /* Debug */,
+				A96FC44C1CA092630045BD43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A9F0F0DE1C97858E00EB492A /* Build configuration list for PBXProject "Onetrack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
