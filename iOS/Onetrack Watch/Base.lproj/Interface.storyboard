@@ -15,7 +15,7 @@
                                 <tableRow identifier="defaultCell" id="Ilm-Bx-iCV" customClass="WatchTableCell">
                                     <group key="rootItem" width="1" alignment="left" id="6Ds-gn-due">
                                         <items>
-                                            <label width="136" height="86.5" alignment="left" text="Label" textAlignment="center" id="tfD-C4-wh3"/>
+                                            <label width="136" height="86.5" alignment="left" textAlignment="center" id="tfD-C4-wh3"/>
                                         </items>
                                     </group>
                                     <connections>
@@ -24,11 +24,6 @@
                                 </tableRow>
                             </items>
                         </table>
-                        <button width="1" alignment="left" title="Zing" id="YT4-jK-frQ">
-                            <connections>
-                                <action selector="buttonClicked" destination="AgC-eL-Hgc" id="dLt-sK-Mli"/>
-                            </connections>
-                        </button>
                     </items>
                     <connections>
                         <outlet property="tableView" destination="xbD-zq-Fgn" id="i0J-Yt-dBO"/>

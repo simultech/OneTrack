@@ -22,13 +22,6 @@
     
     [[AppModel sharedModel] restore];
     
-    if ([WCSession isSupported]) {
-        self.session = [WCSession defaultSession];
-        self.session.delegate = self;
-        [self.session activateSession];
-        NSLog(@"ACTIVATING SESSION");
-    }
-    
     [[AppModel sharedModel] verifyLoginWithSuccess:^{
         NSLog(@"%@",[[AppModel sharedModel] getUserDetails]);
     } andFailure:^{
@@ -50,12 +43,19 @@
     lpgr.minimumPressDuration = 3.0; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveUpdateNotification:)
+                                                 name:@"UpdatedDataNotification"
+                                               object:nil];
 }
 
-- (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message {
-    NSLog(@"RECEIVED ON PHONE");
-    NSString *counterValue = [message objectForKey:@"counterValue"];
-    NSLog(@"FOUND ME A %@", counterValue);
+- (void)receiveUpdateNotification:(NSNotification *)notification {
+    NSLog(@"RECEIVED NOTIFICATION");
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        NSLog(@"DISPATCHING");
+        [self.tableView reloadData];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -136,25 +136,6 @@
     [[UIDevice currentDevice] playInputClick];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     BOOL added = [[AppModel sharedModel] addCountToTracker:(int)indexPath.row];
-    
-    if ([self.session isReachable]) {
-        NSLog(@"IS REACHABLE");
-        NSString *counterString = [NSString stringWithFormat:@"%d", 4];
-        NSDictionary *applicationData = [[NSDictionary alloc] initWithObjects:@[counterString] forKeys:@[@"counterValue"]];
-        [self.session sendMessage:applicationData
-                     replyHandler:^(NSDictionary *reply) {
-                         NSLog(@"GOT REPLY");
-                         //handle reply from iPhone app here
-                     }
-                     errorHandler:^(NSError *error) {
-                         NSLog(@"GOT ERROR %@", error);
-                         //catch any errors here
-                     }
-         ];
-    } else {
-        NSLog(@"IS NOT REACHABLE");
-    }
-    
     [self.tableView reloadData];
     if(added) {
         [self animateIndexPath:indexPath withType:@"success"];

@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WatchConnectivity/WatchConnectivity.h>
 
-@interface AppModel : NSObject
+@interface AppModel : NSObject <WCSessionDelegate>
 
+@property (nonatomic, strong) WCSession *session;
 @property (nonatomic, strong) NSArray *items;
 
 + (id)sharedModel;

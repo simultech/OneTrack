@@ -13,6 +13,7 @@
 @interface InterfaceController : WKInterfaceController <WCSessionDelegate>
 
 @property (nonatomic, strong) WCSession *session;
+@property (nonatomic, strong) NSArray *state;
 @property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceTable *tableView;
 - (IBAction)buttonClicked;
 

@@ -25,6 +25,12 @@
 - (id)init {
     if (self = [super init]) {
         NSLog(@"CREATING MODEL");
+        if ([WCSession isSupported]) {
+            self.session = [WCSession defaultSession];
+            self.session.delegate = self;
+            [self.session activateSession];
+            NSLog(@"ACTIVATING SESSION");
+        }
     }
     return self;
 }
@@ -34,6 +40,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"dataz.txt"];
     [NSKeyedArchiver archiveRootObject:self.items toFile:appFile];
+    [self updateWatchState];
 }
 
 -(void)restore {
@@ -44,6 +51,7 @@
     if(!self.items) {
         self.items = [[NSArray alloc] init];
     }
+    [self updateWatchState];
 }
 
 -(void)moveTrackerFrom:(int)from to:(int)to {
@@ -204,6 +212,32 @@
              failure();
          }
      }];
+}
+
+#pragma mark watch functions
+
+- (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message {
+    NSLog(@"RECEIVED ON PHONE");
+    NSNumber *indexTapped = [message objectForKey:@"index"];
+    [self addCountToTracker:(int)[indexTapped integerValue]];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"UpdatedDataNotification"
+     object:self];
+    NSLog(@"SENT NOTIFICATION");
+}
+
+- (void)updateWatchState {
+    if ([self.session isReachable]) {
+        NSDictionary *applicationData = @{@"state":[[AppModel sharedModel] items]};
+        [self.session sendMessage:applicationData
+                     replyHandler:^(NSDictionary *reply) {
+                         NSLog(@"GOT REPLY %@", reply);
+                     }
+                     errorHandler:^(NSError *error) {
+                         NSLog(@"GOT ERROR %@", error);
+                     }
+         ];
+    }
 }
 
 @end
