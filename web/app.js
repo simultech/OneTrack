@@ -55,25 +55,34 @@ app.listen(3000, function () {
 app.post('/add_user', function (req, res) {
 	console.log("This is request", req.body);
 	//1. query to insert the user
-	var insertUser = function(db, callback) {
-	   db.collection('users').insertOne(req.body, function(err, result) {
-	    assert.equal(err, null);
-	    console.log("Inserted a USER");
-	    callback();
+	var insertUser = function(db, callback, error) {
+	   db.collection('users').updateOne(
+      {fb_id:req.body.fb_id},   //check if fb_id exists
+      req.body,                 //if not insert req.body
+      {upsert:true,safe:false}, //activate upsert
+      function(err, result) {
+      if(err != null) {
+        error(err);
+      } else {
+        console.log("Inserted a USER");
+        callback();
+      }
 	  }); 
 	};
 
 	//2. call database with query
 	console.log("***** Insert into MongoDB ******");
 	insertUser(db, function() {
-      	db.close();
-  	});
+        res.send({'success':'true'});
+  	}, function(message) {
+        res.send({'success':'false', 'message':message});
+    });
 
-  	res.send('Got a add_user POST request');
 });
 
 
 // create_tracker - Create a tracker
+
 
 // get_trackers - Get trackers for a user
 
