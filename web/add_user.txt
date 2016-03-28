@@ -7,14 +7,11 @@ add user
 return success
 // create_tracker - Create a tracker
 {
-	'id': 1
+	'fb_id':111
 	'name': 'string',
-	'clicks': [
-		'2014-01-01 11:00:00'
-	],
 	'maxCount': 4,
 }
-
+returns: success and id generated on server
 // get_trackers - Get trackers for a user
 	params: user_id
 	returns: [track, track, track]
