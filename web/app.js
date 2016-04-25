@@ -94,6 +94,7 @@ app.post('/create_tracker', function (req, res) {
   trackerDict.id = shortid.generate();
   trackerDict.name = req.body.name;
   trackerDict.maxCount = req.body.maxCount;
+  trackerDict.deleted = false;
   var insertTracker = function(db, callback, error) {
     console.log("trackerDict", trackerDict);
     db.collection('users').updateOne(
@@ -123,16 +124,16 @@ app.get('/get_trackers', function (req, res) {
   console.log("This is get_trackers request", req.query);
   
   var getTrackers = function(db, callback, error) {
-  var cursor =db.collection('users').find( { "fb_id": "_"+req.query.fb_id } );
-  cursor.nextObject(function(err, doc) {
-    assert.equal(err, null);
-    if (doc !== null) {
-      // console.dir('tracks', doc);
-      callback(doc.tracks);
-    } else {
-       error(err);
-    }
-   });
+    var cursor =db.collection('users').find( { "fb_id": "_"+req.query.fb_id } );
+    cursor.nextObject(function(err, doc) {
+      assert.equal(err, null);
+      if (doc !== null) {
+        // console.dir('tracks', doc);
+        callback(doc.tracks);
+      } else {
+         error(err);
+      }
+    });
 
   };
 
@@ -181,8 +182,27 @@ app.post('/delete_tracker', function (req, res) {
   //1. query to insert the user
   
   var deleteTracker = function(db, callback, error) {
-    
+    db.collection('users').updateOne(
+      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {$set:{"tracks.$.deleted":true}}, //push to tracks
+      function(err, result) {
+        if(err !== null) {
+          error(err);
+        } else {
+          console.log("Deleted a Tracker");
+          callback();
+        }
+      }
+    );
   };
+
+  console.log("***** Delete Tracker into MongoDB ******");
+  deleteTracker(db, function(id) {
+        res.send({'success':'true'});
+    }, function(message) {
+        res.send({'success':'false', 'message':message});
+    });
+
 });
 
 // count_up_tracker - Add a count for a tracker
