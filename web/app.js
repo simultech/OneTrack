@@ -95,6 +95,7 @@ app.post('/create_tracker', function (req, res) {
   trackerDict.name = req.body.name;
   trackerDict.maxCount = req.body.maxCount;
   trackerDict.deleted = false;
+  trackerDict.count = [];
   var insertTracker = function(db, callback, error) {
     console.log("trackerDict", trackerDict);
     db.collection('users').updateOne(
@@ -211,8 +212,26 @@ app.post('/count_up_tracker', function (req, res) {
   //1. query to insert the user
   
   var countUpTracker = function(db, callback, error) {
-    
+    db.collection('users').updateOne(
+      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {$push:{"tracks.$.count":req.body.clickValue}}, //push to tracks
+      function(err, result) {
+        if(err !== null) {
+          error(err);
+        } else {
+          console.log("Count UP Tracker");
+          callback();
+        }
+      }
+    );
   };
+
+  console.log("***** Count UP Tracker into MongoDB ******");
+  countUpTracker(db, function(id) {
+        res.send({'success':'true'});
+    }, function(message) {
+        res.send({'success':'false', 'message':message});
+    });
 });
 // count_down_tracker - Remove a count for a tracker
 app.post('/count_down_tracker', function (req, res) {
@@ -220,6 +239,24 @@ app.post('/count_down_tracker', function (req, res) {
   //1. query to insert the user
   
   var countDownTracker = function(db, callback, error) {
-    
+    db.collection('users').updateOne(
+      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {$pull:{"tracks.$.count":req.body.clickValue}}, //push to tracks
+      function(err, result) {
+        if(err !== null) {
+          error(err);
+        } else {
+          console.log("Count DOWN Tracker");
+          callback();
+        }
+      }
+    );
   };
+
+  console.log("***** Count DOWN Tracker into MongoDB ******");
+  countDownTracker(db, function(id) {
+        res.send({'success':'true'});
+    }, function(message) {
+        res.send({'success':'false', 'message':message});
+    });
 });
