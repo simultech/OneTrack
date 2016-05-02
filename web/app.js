@@ -46,8 +46,8 @@ app.post('/', function (req, res) {
   res.send('Got a POST request');
 });
 
-app.listen(3000, function () {
-  console.log('Exjj ample app listening on port 3000!');
+app.listen(80,"0.0.0.0", function () {
+  console.log('Exjj ample app listening on port 80!');
   console.log('test');
 });
 
