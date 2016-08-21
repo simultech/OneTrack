@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioServices.h>
 #import "AppModel.h"
+#import "OneTrackTableViewCell.h"
 
 @interface MainTableTableViewController ()
 
@@ -65,7 +66,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row < [[AppModel sharedModel] items].count) {
-        return 120.0f;
+        return 60.0f;
     }
     return 0.0f;
 }
@@ -87,44 +88,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *item = [(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"defaultCell" forIndexPath:indexPath];
-    NSNumber *maxCount = [item objectForKey:@"maxCount"];
-    [cell setBackgroundColor:[AppDelegate colorFromHexString:@"#fafafa"]];
-    cell.layer.cornerRadius = 16;
-    cell.layer.borderWidth = 4;
-    cell.layer.borderColor = [AppDelegate colorFromHexString:@"#313131"].CGColor;
-    UILabel *itemLabel = (UILabel *)[cell viewWithTag:1];
-    UILabel *todayLabel = (UILabel *)[cell viewWithTag:2];
-    UILabel *totalLabel = (UILabel *)[cell viewWithTag:3];
-    UILabel *lastAdded = (UILabel *)[cell viewWithTag:5];
-    UILabel *ratios = (UILabel *)[cell viewWithTag:6];
-    UIView *bg = (UIView *)[cell viewWithTag:99];
-    bg.layer.cornerRadius = 10;
-    itemLabel.text = [item objectForKey:@"name"];
-    if([maxCount integerValue] == 0) {
-        todayLabel.text = [NSString stringWithFormat:@"%ld today", [[AppModel sharedModel] getTodayCount:[item objectForKey:@"clicks"]]];
-    } else {
-        todayLabel.text = [NSString stringWithFormat:@"(%ld / %@) today", [[AppModel sharedModel] getTodayCount:[item objectForKey:@"clicks"]], maxCount];
-    }
-    lastAdded.text = @"";
-    ratios.text = @"";
-    if([[item objectForKey:@"clicks"] count] > 0) {
-        NSDate *date = [[AppModel sharedModel] dateFromString:[[item objectForKey:@"clicks"] lastObject]];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-        dateFormatter.dateFormat = @"dd/MM/yy hh:mma";
-        lastAdded.text = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:date]];
-        NSDate *now = [NSDate date];
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:now];
-        NSInteger hour = [components hour];
-        long todayCount = [[AppModel sharedModel] getTodayCount:[item objectForKey:@"clicks"]];
-        long yesterdayCount = [[AppModel sharedModel] getYesterdayCount:[item objectForKey:@"clicks"]];
-        double todayRatio = todayCount / (float)hour;
-        double totalRatio = yesterdayCount / 24.0f;
-        ratios.text = [NSString stringWithFormat:@"(%.2fp.h. (prev %.2fp.h.))",todayRatio, totalRatio];
-    }
-    totalLabel.text = [NSString stringWithFormat:@"%d total", (int)[[item objectForKey:@"clicks"] count]];
+    OneTrackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OneTrackCell" forIndexPath:indexPath];
+    [cell initCellWithData:item];
     return cell;
 }
 

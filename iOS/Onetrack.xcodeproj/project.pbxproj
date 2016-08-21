@@ -19,6 +19,8 @@
 		A92501C41C9DFB3A0031E97E /* JBLineChartDotsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92501B61C9DFB3A0031E97E /* JBLineChartDotsView.m */; };
 		A92501C51C9DFB3A0031E97E /* JBLineChartDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92501B81C9DFB3A0031E97E /* JBLineChartDotView.m */; };
 		A92501C61C9DFB3A0031E97E /* JBLineChartLinesView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92501BA1C9DFB3A0031E97E /* JBLineChartLinesView.m */; };
+		A92DD2C91D69992600F5C3CC /* OneTrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92DD2C81D69992600F5C3CC /* OneTrackTableViewCell.m */; };
+		A92DD2CB1D699D1200F5C3CC /* MyriadPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A92DD2CA1D699D1200F5C3CC /* MyriadPro-Bold.otf */; };
 		A94221E71C9EBB9400197CA1 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A94221E61C9EBB9400197CA1 /* AppModel.m */; };
 		A94222441C9EC71E00197CA1 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A94222231C9EC71E00197CA1 /* AFHTTPSessionManager.m */; };
 		A94222451C9EC71E00197CA1 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A94222261C9EC71E00197CA1 /* AFNetworkReachabilityManager.m */; };
@@ -141,6 +143,9 @@
 		A92501B81C9DFB3A0031E97E /* JBLineChartDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBLineChartDotView.m; sourceTree = "<group>"; };
 		A92501B91C9DFB3A0031E97E /* JBLineChartLinesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBLineChartLinesView.h; sourceTree = "<group>"; };
 		A92501BA1C9DFB3A0031E97E /* JBLineChartLinesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBLineChartLinesView.m; sourceTree = "<group>"; };
+		A92DD2C71D69992600F5C3CC /* OneTrackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTrackTableViewCell.h; sourceTree = "<group>"; };
+		A92DD2C81D69992600F5C3CC /* OneTrackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTrackTableViewCell.m; sourceTree = "<group>"; };
+		A92DD2CA1D699D1200F5C3CC /* MyriadPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-Bold.otf"; sourceTree = "<group>"; };
 		A94221E51C9EBB9400197CA1 /* AppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppModel.h; sourceTree = "<group>"; };
 		A94221E61C9EBB9400197CA1 /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppModel.m; sourceTree = "<group>"; };
 		A94222221C9EC71E00197CA1 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -347,6 +352,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		A92DD2C61D69990100F5C3CC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A92DD2C71D69992600F5C3CC /* OneTrackTableViewCell.h */,
+				A92DD2C81D69992600F5C3CC /* OneTrackTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		A94221E31C9EBB6500197CA1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +479,7 @@
 		A9F0F0DA1C97858E00EB492A = {
 			isa = PBXGroup;
 			children = (
+				A92DD2CA1D699D1200F5C3CC /* MyriadPro-Bold.otf */,
 				A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */,
 				A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */,
 				A9D455F71C993CA2001CACE3 /* AudioToolbox.framework */,
@@ -494,6 +509,7 @@
 			children = (
 				A9D455C31C9830A5001CACE3 /* Lib */,
 				A94221E41C9EBB7F00197CA1 /* Models */,
+				A92DD2C61D69990100F5C3CC /* Views */,
 				A94221E31C9EBB6500197CA1 /* Controllers */,
 				A9F0F0E61C97858E00EB492A /* Supporting Files */,
 			);
@@ -701,6 +717,7 @@
 				A9F0F0F61C97858F00EB492A /* LaunchScreen.storyboard in Resources */,
 				A9D455F61C984DF3001CACE3 /* fontawesome-webfont.ttf in Resources */,
 				A9F0F0F31C97858F00EB492A /* Assets.xcassets in Resources */,
+				A92DD2CB1D699D1200F5C3CC /* MyriadPro-Bold.otf in Resources */,
 				A9F0F0F11C97858F00EB492A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,6 +787,7 @@
 				A92501C11C9DFB3A0031E97E /* JBShapeLineLayer.m in Sources */,
 				A92501C31C9DFB3A0031E97E /* JBLineChartPoint.m in Sources */,
 				A94222481C9EC71E00197CA1 /* AFURLResponseSerialization.m in Sources */,
+				A92DD2C91D69992600F5C3CC /* OneTrackTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
