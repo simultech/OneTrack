@@ -17,15 +17,15 @@
 }
 
 - (void)initCellWithData:data {
+    BOOL new = NO;
+    if(![[data objectForKey:@"name"] isEqualToString:[self.data objectForKey:@"name"]]) {
+        new = YES;
+    }
     self.data = data;
-    NSLog(@"HELLO ABCDEF");
-    NSLog(@"%@",self.data);
-    [self redraw];
+    [self redraw:new];
 }
 
-- (void)redraw {
-    
-    [self.contentView setBackgroundColor:[self.data objectForKey:@"color"]];
+- (void)redraw:(BOOL)new {
     
     NSNumber *maxCount = [self.data objectForKey:@"maxCount"];
     UILabel *itemLabel = (UILabel *)[self viewWithTag:1];
@@ -33,8 +33,11 @@
     UILabel *lastAdded = (UILabel *)[self viewWithTag:5];
     UIView *metaBG = (UIView *)[self viewWithTag:20];
     
+    if(new) {
+        [self.contentView setBackgroundColor:[self.data objectForKey:@"color"]];
+        [metaBG setBackgroundColor:[self darkerColorForColor:[self.data objectForKey:@"color"] withChange:0.1]];
+    }
     
-    [metaBG setBackgroundColor:[self darkerColorForColor:[self.data objectForKey:@"color"] withChange:0.1]];
     itemLabel.text = [self.data objectForKey:@"name"];
     if([maxCount integerValue] == 0) {
         todayLabel.text = [NSString stringWithFormat:@"%ld", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]]];
@@ -56,9 +59,23 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
+    if(selected) {
+        [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut animations:^
+        {
+            [self.contentView setBackgroundColor:[self lighterColorForColor:[self.data objectForKey:@"color"] withChange:0.4]];
+            UIView *metaBG = (UIView *)[self viewWithTag:20];
+            [metaBG setBackgroundColor:[self lighterColorForColor:[self.data objectForKey:@"color"] withChange:0.3]];
+        } completion:^(BOOL finished)
+        {
+            [UIView animateWithDuration:0.6 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionCurveEaseInOut animations:^
+             {
+                 [self.contentView setBackgroundColor:[self.data objectForKey:@"color"]];
+                 UIView *metaBG = (UIView *)[self viewWithTag:20];
+                 [metaBG setBackgroundColor:[self darkerColorForColor:[self.data objectForKey:@"color"] withChange:0.1]];
+             } completion: NULL];
+        }];
+    }
 }
 
 - (UIColor *)darkerColorForColor:(UIColor *)c withChange:(float)change {
