@@ -95,9 +95,9 @@
     [self save];
 }
 
--(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay {
+-(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
     NSMutableArray *mutableItems = [[[AppModel sharedModel] items] mutableCopy];
-    NSDictionary *item = @{@"name" : name, @"clicks" : @[], @"maxCount": usePerDay};
+    NSDictionary *item = @{@"name" : name, @"clicks" : @[], @"maxCount": usePerDay, @"color": color};
     [mutableItems addObject:item];
     NSLog(@"ADDING NEW");
     [self setItems:[mutableItems copy]];

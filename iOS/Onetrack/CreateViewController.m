@@ -40,7 +40,10 @@
         if(maxUsage == nil) {
             maxUsage = @0;
         }
-        [[AppModel sharedModel] addTracker:self.name.text withMaxUse:maxUsage];
+        //UIColor *trackerColor = [UIColor colorWithRed:0.514  green:0.141  blue:0.149 alpha:1];
+        //UIColor *trackerColor = [UIColor colorWithRed:0.141  green:0.514  blue:0.141 alpha:1];
+        UIColor *trackerColor = [UIColor colorWithRed:0.141  green:0.141  blue:0.514 alpha:1];
+        [[AppModel sharedModel] addTracker:self.name.text withMaxUse:maxUsage withColor:trackerColor];
         [self closeTapped:sender];
     }
 }

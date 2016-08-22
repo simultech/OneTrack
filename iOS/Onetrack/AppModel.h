@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <WatchConnectivity/WatchConnectivity.h>
+#import <UIKit/UIKit.h>
 
 @interface AppModel : NSObject <WCSessionDelegate>
 
@@ -22,7 +23,7 @@
 -(void)moveTrackerFrom:(int)from to:(int)to;
 -(BOOL)addCountToTracker:(int)index;
 -(void)resetTracker:(int)index;
--(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay;
+-(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color;
 -(void)deleteTracker:(int)index;
 -(void)removeCountFromTracker:(int)index;
 

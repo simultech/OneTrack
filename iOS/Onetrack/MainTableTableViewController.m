@@ -31,6 +31,7 @@
 
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     self.tableView.tableFooterView = [UIView new];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView setBackgroundColor:[AppDelegate colorFromHexString:@"#313131"]];
     
     UISwipeGestureRecognizer *recognizer  = [[UISwipeGestureRecognizer alloc] initWithTarget:self

@@ -25,7 +25,7 @@
 
 - (void)redraw {
     
-    [self.contentView setBackgroundColor:[UIColor colorWithRed:0.514  green:0.141  blue:0.149 alpha:1]];
+    [self.contentView setBackgroundColor:[self.data objectForKey:@"color"]];
     
     NSNumber *maxCount = [self.data objectForKey:@"maxCount"];
     UILabel *itemLabel = (UILabel *)[self viewWithTag:1];
@@ -33,12 +33,17 @@
     UILabel *lastAdded = (UILabel *)[self viewWithTag:5];
     UIView *metaBG = (UIView *)[self viewWithTag:20];
     
-    [metaBG setBackgroundColor:[UIColor colorWithRed:0.302  green:0.082  blue:0.086 alpha:1]];
+    
+    [metaBG setBackgroundColor:[self darkerColorForColor:[self.data objectForKey:@"color"] withChange:0.1]];
     itemLabel.text = [self.data objectForKey:@"name"];
     if([maxCount integerValue] == 0) {
         todayLabel.text = [NSString stringWithFormat:@"%ld", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]]];
     } else {
-        todayLabel.text = [NSString stringWithFormat:@"%ld / %@", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]], maxCount];
+        NSString *text = [NSString stringWithFormat:@"%ld / %@", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]], maxCount];
+        NSMutableAttributedString *fancyText = [[NSMutableAttributedString alloc] initWithString:text];
+        int index = (int)[text rangeOfString:@"/"].location;
+        [fancyText addAttribute:NSForegroundColorAttributeName value:[self lighterColorForColor:[self.data objectForKey:@"color"] withChange:0.5] range:NSMakeRange(index, text.length - index)];
+        todayLabel.attributedText = fancyText;
     }
     lastAdded.text = @"";
     if([[self.data objectForKey:@"clicks"] count] > 0) {
@@ -54,6 +59,26 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (UIColor *)darkerColorForColor:(UIColor *)c withChange:(float)change {
+    CGFloat r, g, b, a;
+    if ([c getRed:&r green:&g blue:&b alpha:&a])
+        return [UIColor colorWithRed:MAX(r - change, 0.0)
+                               green:MAX(g - change, 0.0)
+                                blue:MAX(b - change, 0.0)
+                               alpha:a];
+    return nil;
+}
+
+- (UIColor *)lighterColorForColor:(UIColor *)c withChange:(float)change {
+    CGFloat r, g, b, a;
+    if ([c getRed:&r green:&g blue:&b alpha:&a])
+        return [UIColor colorWithRed:MAX(r + change, 0.0)
+                               green:MAX(g + change, 0.0)
+                                blue:MAX(b + change, 0.0)
+                               alpha:a];
+    return nil;
 }
 
 @end
