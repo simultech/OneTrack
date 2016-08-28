@@ -16,16 +16,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNeedsStatusBarAppearanceUpdate];
     self.messageLabel.text = @"";
     FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
     loginButton.readPermissions = @[@"email", @"user_friends"];
     loginButton.center = CGPointMake(self.view.frame.size.width/2,self.view.frame.size.height - 40);
     loginButton.delegate = self;
     [self.view addSubview:loginButton];
+    NSLog(@"STARTING");
     // Do any additional setup after loading the view.
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backClicked)];
+    singleTap.numberOfTapsRequired = 1;
+    [self.backButtonImage setUserInteractionEnabled:YES];
+    [self.backButtonImage addGestureRecognizer:singleTap];
+    
+    [[AppModel sharedModel] verifyLoginWithSuccess:^{
+        self.backButtonImage.hidden = NO;
+    } andFailure:^{
+        self.backButtonImage.hidden = YES;
+    }];
 }
 
-- (void)  loginButton:(FBSDKLoginButton *)loginButton
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (void) backClicked {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) loginButton:(FBSDKLoginButton *)loginButton
 didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
                 error:(NSError *)error {
     NSLog(@"loginButton %@",result.grantedPermissions);
@@ -39,13 +60,10 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
         [self dismissViewControllerAnimated:YES completion:nil];
         [[AppModel sharedModel] addUser];
     }
-    NSLog(@"%@",result);
-    NSLog(@"LOGGED IN");
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
     self.messageLabel.text = @"You have been logged out";
-    NSLog(@"LOGGED OUT");
 }
 
 - (void)didReceiveMemoryWarning {

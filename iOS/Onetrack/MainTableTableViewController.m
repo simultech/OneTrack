@@ -65,7 +65,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row < [[AppModel sharedModel] items].count) {
+    if (indexPath.section == 1) {
+        return 90.0f;
+    } else if(indexPath.row < [[AppModel sharedModel] items].count) {
         return 90.0f;
     }
     return 0.0f;
@@ -91,12 +93,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == 1) {
-        return [tableView dequeueReusableCellWithIdentifier:@"AddTrackCell" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddTrackCell" forIndexPath:indexPath];
+        return cell;
     }
     NSDictionary *item = [(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row];
     OneTrackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OneTrackCell" forIndexPath:indexPath];
+    UIView *detail = (UIView*)[cell viewWithTag:20];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(detailClicked:)];
+    singleTap.numberOfTapsRequired = 1;
+    [detail setUserInteractionEnabled:YES];
+    [detail addGestureRecognizer:singleTap];
     [cell initCellWithData:item];
     return cell;
+}
+
+- (void)detailClicked: (UITapGestureRecognizer *)recognizer {
+    [self performSegueWithIdentifier:@"DetailSegue" sender:(UITableViewCell *)recognizer.view.superview.superview];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -145,13 +157,20 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
+}
+
 - (IBAction)editingClicked:(id)sender {
     if([self.tableView isEditing]) {
+        
         [self.tableView setEditing: NO animated: YES];
-        self.editButton.title = @"Edit";
+        self.editButton.image = [UIImage imageNamed:@"edit"];
     } else {
         [self.tableView setEditing: YES animated: YES];
-        self.editButton.title = @"Finish Editing";
+        self.editButton.image = [UIImage imageNamed:@"edit_active"];
     }
 }
 

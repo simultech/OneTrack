@@ -40,9 +40,33 @@
         if(maxUsage == nil) {
             maxUsage = @0;
         }
-        //UIColor *trackerColor = [UIColor colorWithRed:0.514  green:0.141  blue:0.149 alpha:1];
-        //UIColor *trackerColor = [UIColor colorWithRed:0.141  green:0.514  blue:0.141 alpha:1];
-        UIColor *trackerColor = [UIColor colorWithRed:0.141  green:0.141  blue:0.514 alpha:1];
+        UIColor *trackerColor = [UIColor blackColor];
+        int randCol=rand()%6;
+        switch(randCol) {
+            case 0:
+                trackerColor = [UIColor colorWithRed:0.514  green:0.141  blue:0.149 alpha:1];
+                break;
+            case 1:
+                trackerColor = [UIColor colorWithRed:0.141  green:0.514  blue:0.141 alpha:1];
+                break;
+            case 2:
+                trackerColor = [UIColor colorWithRed:0.141  green:0.141  blue:0.514 alpha:1];
+                break;
+            case 3:
+                trackerColor = [UIColor colorWithRed:0.514  green:0.141  blue:0.149 alpha:1];
+                break;
+            case 4:
+                trackerColor = [UIColor colorWithRed:0.514  green:0.514  blue:0.149 alpha:1];
+                break;
+            case 5:
+                trackerColor = [UIColor colorWithRed:0.514  green:0.141  blue:0.514 alpha:1];
+                break;
+            case 6:
+                trackerColor = [UIColor colorWithRed:0.141  green:0.514  blue:0.514 alpha:1];
+                break;
+            default:
+                break;
+        }
         [[AppModel sharedModel] addTracker:self.name.text withMaxUse:maxUsage withColor:trackerColor];
         [self closeTapped:sender];
     }
