@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-
+#import "AppModel.h"
 @interface LoginViewController ()
 
 @end
@@ -28,6 +28,7 @@
 - (void)  loginButton:(FBSDKLoginButton *)loginButton
 didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
                 error:(NSError *)error {
+    NSLog(@"loginButton %@",result.grantedPermissions);
     self.messageLabel.text = @"";
     if ((error) != nil) {
         NSLog(@"THERE WAS AN ERROR %@", error);

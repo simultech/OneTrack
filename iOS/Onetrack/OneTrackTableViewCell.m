@@ -43,8 +43,10 @@
         todayLabel.text = [NSString stringWithFormat:@"%ld", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]]];
     } else {
         NSString *text = [NSString stringWithFormat:@"%ld / %@", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]], maxCount];
+        NSLog(@"text %@", text);
         NSMutableAttributedString *fancyText = [[NSMutableAttributedString alloc] initWithString:text];
         int index = (int)[text rangeOfString:@"/"].location;
+        NSLog(@"value %@, color %@", [self lighterColorForColor:[self.data objectForKey:@"color"] withChange:0.5], [self.data objectForKey:@"color"]);
         [fancyText addAttribute:NSForegroundColorAttributeName value:[self lighterColorForColor:[self.data objectForKey:@"color"] withChange:0.5] range:NSMakeRange(index, text.length - index)];
         todayLabel.attributedText = fancyText;
     }
