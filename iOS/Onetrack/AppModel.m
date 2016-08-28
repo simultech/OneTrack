@@ -10,7 +10,10 @@
 #import "AFNetworking/AFNetworking.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#define hasInternetConnection \
+[AFNetworkReachabilityManager sharedManager].reachable
 
+#define APIString @"http://habitcount.com/"
 @implementation AppModel
 
 + (id)sharedModel {
@@ -240,4 +243,28 @@
     }
 }
 
+
+-(void)callAPIWithPostWith:(NSString *)URLString and:(NSString *)parameters{
+    NSString *endpoint = [self endpointWithString:URLString];
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    NSLog(@"hasInternet %d", hasInternetConnection);
+
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:endpoint parameters:parameters error:nil];
+
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            NSLog(@"%@ %@", response, responseObject);
+        }
+    }];
+    [dataTask resume];
+}
+
+-(NSString *)endpointWithString:(NSString *)endpoint{
+    return [NSString stringWithFormat:@"%@/%@",APIString, endpoint];
+}
 @end

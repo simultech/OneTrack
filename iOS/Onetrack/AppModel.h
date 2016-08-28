@@ -33,5 +33,7 @@
 - (long)getTodayCount:(NSArray *)counts;
 - (long)getYesterdayCount:(NSArray *)counts;
 
+//API Methods
+-(void)callAPIWithPostWith:(NSString *)URLString and:(NSString *)parameters;
 
 @end
