@@ -67,7 +67,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row < [[AppModel sharedModel] items].count) {
-        return 60.0f;
+        return 90.0f;
     }
     return 0.0f;
 }
@@ -80,14 +80,20 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 1) {
+        return 1;
+    }
     return [[[AppModel sharedModel] items] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.section == 1) {
+        return [tableView dequeueReusableCellWithIdentifier:@"AddTrackCell" forIndexPath:indexPath];
+    }
     NSDictionary *item = [(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row];
     OneTrackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OneTrackCell" forIndexPath:indexPath];
     [cell initCellWithData:item];
@@ -99,15 +105,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.section == 1) {
+        [self performSegueWithIdentifier:@"CreateSegue" sender:self];
+    } else {
+        BOOL added = [[AppModel sharedModel] addCountToTracker:(int)indexPath.row];
+        [self.tableView reloadData];
+        if(added) {
+            [self animateIndexPath:indexPath withType:@"success"];
+        } else {
+            [self animateIndexPath:indexPath withType:@"limit"];
+        }
+    }
     [[UIDevice currentDevice] playInputClick];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    BOOL added = [[AppModel sharedModel] addCountToTracker:(int)indexPath.row];
-    [self.tableView reloadData];
-    if(added) {
-        [self animateIndexPath:indexPath withType:@"success"];
-    } else {
-        [self animateIndexPath:indexPath withType:@"limit"];
-    }
+    
 }
 
 - (void)animateIndexPath:(NSIndexPath *)indexPath withType:(NSString *)type {
@@ -145,14 +156,12 @@
     }
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"DOING SEGUE %@", [segue identifier]);    
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
     if ([[segue identifier] isEqualToString:@"CreateSegue"]) {
         // Get reference to the destination view controller
         UINavigationController *navController = [segue destinationViewController];
         CreateViewController *vc = (CreateViewController *)([navController viewControllers][0]);
         vc.delegate = self;
-        NSLog(@"SETTING DELEGATE %@", vc.delegate);
     } else if ([[segue identifier] isEqualToString:@"DetailSegue"]) {
         // Get reference to the destination view controller
         DetailViewController *vc = [segue destinationViewController];

@@ -119,6 +119,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A9245AD21D727E3D00836151 /* MyriadPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-Regular.otf"; sourceTree = "<group>"; };
 		A925019C1C9DFB3A0031E97E /* NSMutableArray+JBStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+JBStack.h"; sourceTree = "<group>"; };
 		A925019D1C9DFB3A0031E97E /* NSMutableArray+JBStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+JBStack.m"; sourceTree = "<group>"; };
 		A925019F1C9DFB3A0031E97E /* JBBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBBarChartView.h; sourceTree = "<group>"; };
@@ -479,6 +480,7 @@
 		A9F0F0DA1C97858E00EB492A = {
 			isa = PBXGroup;
 			children = (
+				A9245AD21D727E3D00836151 /* MyriadPro-Regular.otf */,
 				A92DD2CA1D699D1200F5C3CC /* MyriadPro-Bold.otf */,
 				A94222591C9ECDB700197CA1 /* FBSDKLoginKit.framework */,
 				A94222551C9ECC5900197CA1 /* FBSDKCoreKit.framework */,

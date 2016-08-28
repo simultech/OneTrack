@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>MyriadPro-Bold</string>
+		<string>MyriadPro-Regular</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
