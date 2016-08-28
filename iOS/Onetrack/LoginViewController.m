@@ -37,6 +37,7 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
         self.messageLabel.text = @"Login cancelled, please try again";
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
+        [[AppModel sharedModel] addUser];
     }
     NSLog(@"%@",result);
     NSLog(@"LOGGED IN");

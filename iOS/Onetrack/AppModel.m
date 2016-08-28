@@ -13,7 +13,8 @@
 #define hasInternetConnection \
 [AFNetworkReachabilityManager sharedManager].reachable
 
-#define APIString @"http://habitcount.com/"
+//#define APIString @"http://habitcount.com"
+#define APIString @"http://0.0.0.0"
 @implementation AppModel
 
 + (id)sharedModel {
@@ -244,24 +245,44 @@
 }
 
 
--(void)callAPIWithPostWith:(NSString *)URLString and:(NSString *)parameters{
+-(void)addUser{
+    [[AppModel sharedModel] verifyLoginWithSuccess:^{
+        NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+        NSLog(@"THESE ARE THE USERS DETAILS%@",userDetails);
+
+        NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+        [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
+        [data setObject:[userDetails objectForKey:@"user_name"] forKey:@"name"];
+        [self callAPIWithPostWithEndpoint:@"add_user" andParameters:data andSuccess:^(id response) {
+            NSLog(@"response %@", response);
+        } andFailure:^(NSError *error) {
+            NSLog(@"error %@", error);
+        }];
+    } andFailure:nil];
+}
+-(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
     NSString *endpoint = [self endpointWithString:URLString];
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     NSLog(@"hasInternet %d", hasInternetConnection);
+//    if (hasInternetConnection) {
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
 
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    
-    NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:endpoint parameters:parameters error:nil];
+        NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:endpoint parameters:parameters error:nil];
 
-    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@", error);
-        } else {
-            NSLog(@"%@ %@", response, responseObject);
-        }
-    }];
-    [dataTask resume];
+        NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+            if (error) {
+                NSLog(@"Error: %@", error);
+                failure(error);
+            } else {
+                NSLog(@"%@ %@", response, responseObject);
+                success(responseObject);
+            }
+        }];
+        [dataTask resume];
+//    }else{
+//        NSLog(@"no internet");
+//    }
 }
 
 -(NSString *)endpointWithString:(NSString *)endpoint{

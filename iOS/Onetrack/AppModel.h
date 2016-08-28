@@ -34,6 +34,8 @@
 - (long)getYesterdayCount:(NSArray *)counts;
 
 //API Methods
--(void)callAPIWithPostWith:(NSString *)URLString and:(NSString *)parameters;
+-(void)addUser;
+-(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure;
+
 
 @end
