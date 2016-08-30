@@ -93,9 +93,10 @@ app.post('/create_tracker', function (req, res) {
   var trackerDict = {};
   trackerDict.id = shortid.generate();
   trackerDict.name = req.body.name;
-  trackerDict.maxCount = req.body.maxCount;
+  trackerDict.max_count = req.body.max_count;
   trackerDict.deleted = false;
   trackerDict.count = [];
+  trackerDict.color = req.body.color;
   var insertTracker = function(db, callback, error) {
     console.log("trackerDict", trackerDict);
     db.collection('users').updateOne(
@@ -156,7 +157,7 @@ app.post('/edit_tracker', function (req, res) {
   var editTracker = function(db, callback, error) {
     db.collection('users').updateOne(
       {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
-      {$set:{"tracks.$.name":req.body.name, "tracks.$.maxCount":req.body.maxCount}}, //push to tracks
+      {$set:{"tracks.$.name":req.body.name, "tracks.$.max_count":req.body.max_count}}, //push to tracks
       function(err, result) {
         if(err !== null) {
           error(err);
@@ -214,7 +215,7 @@ app.post('/count_up_tracker', function (req, res) {
   var countUpTracker = function(db, callback, error) {
     db.collection('users').updateOne(
       {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
-      {$push:{"tracks.$.count":req.body.clickValue}}, //push to tracks
+      {$push:{"tracks.$.count":req.body.click_value}}, //push to tracks
       function(err, result) {
         if(err !== null) {
           error(err);
@@ -241,7 +242,7 @@ app.post('/count_down_tracker', function (req, res) {
   var countDownTracker = function(db, callback, error) {
     db.collection('users').updateOne(
       {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
-      {$pull:{"tracks.$.count":req.body.clickValue}}, //push to tracks
+      {$pull:{"tracks.$.count":req.body.click_value}}, //push to tracks
       function(err, result) {
         if(err !== null) {
           error(err);
