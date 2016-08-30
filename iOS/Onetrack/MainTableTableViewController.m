@@ -175,7 +175,7 @@
         DetailViewController *vc = [segue destinationViewController];
         vc.delegate = self;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        vc.data = [(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row];
+        vc.tracker_id = [[(NSArray *)[[AppModel sharedModel] items] objectAtIndex:indexPath.row] objectForKey:@"tracker_id"];
     }
 }
 

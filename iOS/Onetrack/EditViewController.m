@@ -43,7 +43,6 @@
 }
 
 - (IBAction)saveTapped:(id)sender {
-    NSLog(@"SAVING");
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     NSNumber *maxUsage = [f numberFromString:self.maxTextField.text];

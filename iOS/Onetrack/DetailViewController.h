@@ -24,6 +24,7 @@
 @property (assign) int selectedFilter;
 
 @property (nonatomic, strong) NSDictionary *data;
+@property (nonatomic, strong) NSString *tracker_id;
 @property (nonatomic, strong) NSArray *filteredData;
 @property (nonatomic, strong) JBBarChartView *barChartView;
 - (IBAction)filterTapped:(id)sender;

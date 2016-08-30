@@ -31,7 +31,6 @@
     self.selectedFilter = 0;
     [self.view setBackgroundColor:[AppDelegate colorFromHexString:@"#313131"]];
     // Do any additional setup after loading the view.
-    self.title = [self.data objectForKey:@"name"];
     self.barChartView = [[JBBarChartView alloc] init];
     self.barChartView.dataSource = self;
     self.barChartView.delegate = self;
@@ -40,6 +39,12 @@
     self.barChartView.layer.borderWidth = 1;
     self.barChartView.backgroundColor = [AppDelegate colorFromHexString:@"#333333"];
     self.friendsTableView.hidden = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.data = [[AppModel sharedModel] getDataForTrackerID:self.tracker_id];
+    self.title = [self.data objectForKey:@"name"];
     [self setBarFrame];
 }
 

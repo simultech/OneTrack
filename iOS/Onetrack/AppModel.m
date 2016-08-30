@@ -67,6 +67,17 @@
     [self save];
 }
 
+-(NSDictionary *)getDataForTrackerID:(NSString *)trackerID {
+    NSDictionary *data = @{};
+    for(int i=0; i<self.items.count; i++) {
+        if([trackerID isEqualToString:[[self.items objectAtIndex:i] objectForKey:@"tracker_id"]]) {
+            data = [self.items objectAtIndex:i];
+            break;
+        }
+    }
+    return data;
+}
+
 -(BOOL)addCountToTracker:(int)index {
     BOOL completed = NO;
     NSMutableArray *mutableItems = [self.items mutableCopy];
