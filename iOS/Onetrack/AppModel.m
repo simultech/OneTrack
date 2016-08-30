@@ -118,17 +118,16 @@
     NSLog(@"ADDING NEW");
     [self setItems:[mutableItems copy]];
     [self save];
+
+
     //API call
     CGFloat r,g,b,a;
     [color getRed:&r green:&g blue: &b alpha: &a];
     int rInt = (int)(255.0 * r);
     int gInt = (int)(255.0 * g);
     int bInt = (int)(255.0 * b);
-
     NSString *hexString = [NSString stringWithFormat:@"%02x.%02x.%02x", rInt, gInt, bInt];
-    NSLog(@"hexstring %@", hexString);
-    
-//    [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:hexString];
+    [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:hexString andTrackerID:tracker_id];
 
 }
 
@@ -314,13 +313,14 @@
     } andFailure:nil];
 }
 
--(void)createTrackerWithName:(NSString *)name andMaxCount:(NSString *)maxCount andColor:(NSString *)color{
+-(void)createTrackerWithName:(NSString *)name andMaxCount:(NSString *)maxCount andColor:(NSString *)color andTrackerID:(NSString *)trackerID{
     NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
     [data setObject:name forKey:@"name"];
     [data setObject:maxCount forKey:@"max_count"];
     [data setObject:color forKey:@"color"];
+    [data setObject:trackerID forKey:@"tracker_id"];
     [self callAPIWithPostWithEndpoint:@"create_tracker" andParameters:data andSuccess:^(id response) {
         NSLog(@"createTracker %@", response);
     } andFailure:^(NSError *error) {
@@ -329,8 +329,6 @@
 }
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
     NSString *endpoint = [self endpointWithString:URLString];
-//    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-//    NSLog(@"hasInternet %d", hasInternetConnection);
 
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
