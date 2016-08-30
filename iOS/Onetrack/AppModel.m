@@ -101,11 +101,28 @@
 
 -(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
     NSMutableArray *mutableItems = [[[AppModel sharedModel] items] mutableCopy];
-    NSDictionary *item = @{@"name" : name, @"clicks" : @[], @"maxCount": usePerDay, @"color": color};
+    NSString *tracker_id = [AppModel uuid];
+    NSDictionary *item = @{@"tracker_id": tracker_id, @"name" : name, @"clicks" : @[], @"maxCount": usePerDay, @"color": color};
     [mutableItems addObject:item];
     NSLog(@"ADDING NEW");
     [self setItems:[mutableItems copy]];
     [self save];
+}
+
+-(void)updateTrackerWithId:(NSString *)id withName:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
+    NSMutableArray *mutableItems = [[self items] mutableCopy];
+    for(int i=0; i<mutableItems.count; i++) {
+        if([id isEqualToString:[[mutableItems objectAtIndex:i] objectForKey:@"tracker_id"]]) {
+            NSMutableDictionary *mutableItem = [[mutableItems objectAtIndex:i] mutableCopy];
+            [mutableItem setObject:name forKey:@"name"];
+            [mutableItem setObject:usePerDay forKey:@"maxCount"];
+            [mutableItem setObject:color forKey:@"color"];
+            [mutableItems replaceObjectAtIndex:i withObject:mutableItem];
+        }
+    }
+    [self setItems:[mutableItems copy]];
+    [self save];
+    NSLog(@"UPDATING TRACKER");
 }
 
 -(void)deleteTracker:(int)index {
@@ -301,4 +318,13 @@
 -(NSString *)endpointWithString:(NSString *)endpoint{
     return [NSString stringWithFormat:@"%@/%@",APIString, endpoint];
 }
+
++ (NSString *)uuid
+{
+    CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+    CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
+    CFRelease(uuidRef);
+    return (__bridge_transfer NSString *)uuidStringRef;
+}
+
 @end

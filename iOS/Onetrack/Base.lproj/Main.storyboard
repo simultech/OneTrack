@@ -13,6 +13,8 @@
         <mutableArray key="MyriadPro-Regular.otf">
             <string>MyriadPro-Regular</string>
             <string>MyriadPro-Regular</string>
+            <string>MyriadPro-Regular</string>
+            <string>MyriadPro-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -28,8 +30,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OneTrack!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-HF-AHd">
-                                <rect key="frame" x="242" y="30" width="118" height="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OneTrack!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ms2-HF-AHd">
+                                <rect key="frame" x="241.5" y="30" width="118" height="32.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -159,7 +161,7 @@
                                             </variation>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="99 / 100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="feW-sT-gyZ">
-                                            <rect key="frame" x="422" y="31" width="126" height="36"/>
+                                            <rect key="frame" x="421.5" y="31" width="126.5" height="36"/>
                                             <fontDescription key="fontDescription" name="MyriadPro-Bold" family="Myriad Pro" pointSize="36"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -217,7 +219,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRt-yq-Lhh">
-                                            <rect key="frame" x="277" y="-1" width="47" height="93"/>
+                                            <rect key="frame" x="276.5" y="-1" width="47" height="93"/>
                                             <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="80"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -253,6 +255,98 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag5-Om-IyH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="648" y="680"/>
+        </scene>
+        <!--Edit View Controller-->
+        <scene sceneID="Sj8-sV-hSF">
+            <objects>
+                <viewController id="wOJ-92-1XY" customClass="EditViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TXr-eJ-dEG"/>
+                        <viewControllerLayoutGuide type="bottom" id="5X0-a9-ISl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8Dt-bp-9rS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iNW-LT-pE0">
+                                <rect key="frame" x="30" y="126" width="540" height="50"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="zc4-22-5QK"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="MyriadPro-Regular" family="Myriad Pro" pointSize="24"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbD-Je-YG1">
+                                <rect key="frame" x="30" y="228" width="540" height="50"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hYQ-FU-3on"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MyriadPro-Regular" family="Myriad Pro" pointSize="24"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5q-Yt-B5B">
+                                <rect key="frame" x="272" y="518" width="57" height="30"/>
+                                <state key="normal" title="Settings">
+                                    <color key="titleColor" red="0.64146374240000004" green="0.68595699499999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Fol-1C-u9s" kind="presentation" id="jUq-ug-5Gr"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Tracker Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHd-sb-PT7">
+                                <rect key="frame" x="30" y="97" width="149" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daily Limit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Rf-rA-68h">
+                                <rect key="frame" x="30" y="199" width="111" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1771719568" green="0.1771719568" blue="0.1771719568" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="cbD-Je-YG1" firstAttribute="leading" secondItem="1Rf-rA-68h" secondAttribute="leading" id="0v5-dP-Etb"/>
+                            <constraint firstItem="iNW-LT-pE0" firstAttribute="leading" secondItem="UHd-sb-PT7" secondAttribute="leading" id="3LO-8o-6XM"/>
+                            <constraint firstItem="1Rf-rA-68h" firstAttribute="top" secondItem="iNW-LT-pE0" secondAttribute="bottom" constant="23" id="7WG-Qm-WTY"/>
+                            <constraint firstItem="cbD-Je-YG1" firstAttribute="top" secondItem="8Dt-bp-9rS" secondAttribute="top" constant="228" id="Ce0-qH-WJP"/>
+                            <constraint firstItem="cbD-Je-YG1" firstAttribute="top" secondItem="iNW-LT-pE0" secondAttribute="bottom" constant="52" id="WQB-fP-qFr"/>
+                            <constraint firstItem="H5q-Yt-B5B" firstAttribute="centerX" secondItem="iNW-LT-pE0" secondAttribute="centerX" id="Zkf-He-2Rm"/>
+                            <constraint firstItem="5X0-a9-ISl" firstAttribute="top" secondItem="H5q-Yt-B5B" secondAttribute="bottom" constant="8" symbolic="YES" id="eyE-Zg-adU"/>
+                            <constraint firstItem="cbD-Je-YG1" firstAttribute="leading" secondItem="iNW-LT-pE0" secondAttribute="leading" id="g3K-dL-fEF"/>
+                            <constraint firstItem="cbD-Je-YG1" firstAttribute="leading" secondItem="8Dt-bp-9rS" secondAttribute="leadingMargin" constant="10" id="oqE-Fb-PXx"/>
+                            <constraint firstItem="H5q-Yt-B5B" firstAttribute="centerX" secondItem="cbD-Je-YG1" secondAttribute="centerX" id="rbS-Y2-nu2"/>
+                            <constraint firstItem="H5q-Yt-B5B" firstAttribute="centerX" secondItem="8Dt-bp-9rS" secondAttribute="centerX" id="x7M-fK-Ppq"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="hnr-LF-5Ag">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="463-uV-JTn">
+                            <color key="tintColor" red="0.64146374240000004" green="0.68595699499999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="backTapped:" destination="wOJ-92-1XY" id="puV-vS-BM4"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="confirm" id="9qX-TB-s9n">
+                            <color key="tintColor" red="0.64146374240000004" green="0.68595699499999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="saveTapped:" destination="wOJ-92-1XY" id="F8w-4X-7YB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="maxTextField" destination="cbD-Je-YG1" id="570-zE-sVt"/>
+                        <outlet property="nameTextField" destination="iNW-LT-pE0" id="wzf-NL-Wi4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fB0-1N-ECX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2064" y="-101"/>
         </scene>
         <!--Create Tracker-->
         <scene sceneID="lym-gB-Zii">
@@ -305,7 +399,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracker Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7o-yp-GFw">
-                                <rect key="frame" x="30" y="95" width="149" height="29"/>
+                                <rect key="frame" x="30" y="95" width="148.5" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -489,6 +583,12 @@
                                 <action selector="backTapped:" destination="OOP-dT-54l" id="kh8-oT-Rr9"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="u8N-B1-njU">
+                            <color key="tintColor" red="0.64146374240000004" green="0.68595699499999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="wOJ-92-1XY" kind="push" identifier="EditSegue" id="gPS-Ux-V1o"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -555,6 +655,6 @@
         <image name="edit" width="22" height="6"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mrL-9y-48Q"/>
+        <segue reference="jUq-ug-5Gr"/>
     </inferredMetricsTieBreakers>
 </document>

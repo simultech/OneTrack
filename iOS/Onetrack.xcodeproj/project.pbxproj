@@ -19,6 +19,7 @@
 		A92501C41C9DFB3A0031E97E /* JBLineChartDotsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92501B61C9DFB3A0031E97E /* JBLineChartDotsView.m */; };
 		A92501C51C9DFB3A0031E97E /* JBLineChartDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92501B81C9DFB3A0031E97E /* JBLineChartDotView.m */; };
 		A92501C61C9DFB3A0031E97E /* JBLineChartLinesView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92501BA1C9DFB3A0031E97E /* JBLineChartLinesView.m */; };
+		A928CBCD1D759E56001EF68E /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A928CBCC1D759E56001EF68E /* EditViewController.m */; };
 		A92DD2C91D69992600F5C3CC /* OneTrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92DD2C81D69992600F5C3CC /* OneTrackTableViewCell.m */; };
 		A92DD2CB1D699D1200F5C3CC /* MyriadPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A92DD2CA1D699D1200F5C3CC /* MyriadPro-Bold.otf */; };
 		A94221E71C9EBB9400197CA1 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A94221E61C9EBB9400197CA1 /* AppModel.m */; };
@@ -119,8 +120,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A9245AD21D727E3D00836151 /* MyriadPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-Regular.otf"; sourceTree = "<group>"; };
 		6E077BB21D727AEB00626D6E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		A9245AD21D727E3D00836151 /* MyriadPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-Regular.otf"; sourceTree = "<group>"; };
 		A925019C1C9DFB3A0031E97E /* NSMutableArray+JBStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+JBStack.h"; sourceTree = "<group>"; };
 		A925019D1C9DFB3A0031E97E /* NSMutableArray+JBStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+JBStack.m"; sourceTree = "<group>"; };
 		A925019F1C9DFB3A0031E97E /* JBBarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBBarChartView.h; sourceTree = "<group>"; };
@@ -145,6 +146,8 @@
 		A92501B81C9DFB3A0031E97E /* JBLineChartDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBLineChartDotView.m; sourceTree = "<group>"; };
 		A92501B91C9DFB3A0031E97E /* JBLineChartLinesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBLineChartLinesView.h; sourceTree = "<group>"; };
 		A92501BA1C9DFB3A0031E97E /* JBLineChartLinesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBLineChartLinesView.m; sourceTree = "<group>"; };
+		A928CBCB1D759E56001EF68E /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
+		A928CBCC1D759E56001EF68E /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		A92DD2C71D69992600F5C3CC /* OneTrackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneTrackTableViewCell.h; sourceTree = "<group>"; };
 		A92DD2C81D69992600F5C3CC /* OneTrackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneTrackTableViewCell.m; sourceTree = "<group>"; };
 		A92DD2CA1D699D1200F5C3CC /* MyriadPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadPro-Bold.otf"; sourceTree = "<group>"; };
@@ -374,6 +377,8 @@
 				A9D455B71C97E6F1001CACE3 /* DetailViewController.m */,
 				A942225B1C9F513700197CA1 /* LoginViewController.h */,
 				A942225C1C9F513700197CA1 /* LoginViewController.m */,
+				A928CBCB1D759E56001EF68E /* EditViewController.h */,
+				A928CBCC1D759E56001EF68E /* EditViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -785,6 +790,7 @@
 				A92501BB1C9DFB3A0031E97E /* NSMutableArray+JBStack.m in Sources */,
 				A9F0F11B1C97A30E00EB492A /* MainTableTableViewController.m in Sources */,
 				A9F0F0EB1C97858E00EB492A /* AppDelegate.m in Sources */,
+				A928CBCD1D759E56001EF68E /* EditViewController.m in Sources */,
 				A94221E71C9EBB9400197CA1 /* AppModel.m in Sources */,
 				A92501C61C9DFB3A0031E97E /* JBLineChartLinesView.m in Sources */,
 				A9F0F0E81C97858E00EB492A /* main.m in Sources */,

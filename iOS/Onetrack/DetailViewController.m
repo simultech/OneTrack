@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "AppModel.h"
 #import "UIImageView+AFNetworking.h"
+#import "EditViewController.h"
 
 @interface DetailViewController ()
 
@@ -268,6 +269,13 @@
     [avatar setImageWithURL:[NSURL URLWithString:url]];
     name.text = [data objectForKey:@"name"];
     return cell;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"EditSegue"]) {
+        EditViewController *vc = [segue destinationViewController];
+        vc.data = self.data;
+    }
 }
 
 

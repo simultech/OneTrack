@@ -111,10 +111,6 @@
     [self performSegueWithIdentifier:@"DetailSegue" sender:(UITableViewCell *)recognizer.view.superview.superview];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundView.backgroundColor = [AppDelegate colorFromHexString:@"#eeeeee"];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == 1) {
         [self performSegueWithIdentifier:@"CreateSegue" sender:self];
@@ -157,12 +153,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
-}
-
 - (IBAction)editingClicked:(id)sender {
     if([self.tableView isEditing]) {
         
@@ -192,6 +182,9 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
+    if(indexPath.section == 1) {
+        return NO;
+    }
     return YES;
 }
 

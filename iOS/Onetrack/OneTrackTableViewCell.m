@@ -34,6 +34,7 @@
     UIView *metaBG = (UIView *)[self viewWithTag:20];
     
     if(new) {
+        [self setBackgroundColor:[self darkerColorForColor:[self.data objectForKey:@"color"] withChange:0.1]];
         [self.contentView setBackgroundColor:[self.data objectForKey:@"color"]];
         [metaBG setBackgroundColor:[self darkerColorForColor:[self.data objectForKey:@"color"] withChange:0.1]];
     }

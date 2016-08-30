@@ -24,6 +24,7 @@
 -(BOOL)addCountToTracker:(int)index;
 -(void)resetTracker:(int)index;
 -(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color;
+-(void)updateTrackerWithId:(NSString *)id withName:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color;
 -(void)deleteTracker:(int)index;
 -(void)removeCountFromTracker:(int)index;
 
