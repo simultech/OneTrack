@@ -30,6 +30,9 @@
 - (void)verifyLoginWithSuccess:(void (^)())success andFailure:(void (^)())failure;
 - (NSDictionary *)getUserDetails;
 
+//Friends
+- (void)getFriendsWithSuccess:(void (^)(NSArray *))success andFailure:(void (^)())failure;
+
 - (long)getTodayCount:(NSArray *)counts;
 - (long)getYesterdayCount:(NSArray *)counts;
 

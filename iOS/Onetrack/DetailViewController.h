@@ -16,7 +16,7 @@
 @end
 
 
-@interface DetailViewController : UIViewController <JBBarChartViewDataSource, JBBarChartViewDelegate>
+@interface DetailViewController : UIViewController <JBBarChartViewDataSource, JBBarChartViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *filter;
 
@@ -27,6 +27,17 @@
 @property (nonatomic, strong) NSArray *filteredData;
 @property (nonatomic, strong) JBBarChartView *barChartView;
 - (IBAction)filterTapped:(id)sender;
+- (IBAction)backTapped:(id)sender;
+
+//Friends
+@property (weak, nonatomic) IBOutlet UITableView *friendsTableView;
+@property (strong, nonatomic) NSArray *activeFriends;
+@property (strong, nonatomic) NSArray *friends;
+
+
+
+
+
 @property (weak, nonatomic) IBOutlet UILabel *outputValue;
 @property (weak, nonatomic) IBOutlet UILabel *outputDate;
 

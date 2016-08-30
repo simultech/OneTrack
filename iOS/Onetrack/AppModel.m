@@ -202,7 +202,7 @@
 }
 
 - (void)verifyLoginWithSuccess:(void (^)())success andFailure:(void (^)())failure {
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"id, name, email"}]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -211,6 +211,19 @@
              [defaults setObject:result[@"email"] forKey:@"user_email"];
              [defaults synchronize];
              success();
+         } else {
+             NSLog(@"%@",error);
+             failure();
+         }
+     }];
+}
+
+#pragma mark friends apis
+- (void)getFriendsWithSuccess:(void (^)(NSArray *))success andFailure:(void (^)())failure {
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/taggable_friends?limit=100" parameters:@{@"fields": @"id, name, picture.width(80).height(80)"}]
+     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+         if (!error) {
+             success([result objectForKey:@"data"]);
          } else {
              NSLog(@"%@",error);
              failure();

@@ -9,6 +9,8 @@
 #import "DetailViewController.h"
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "AppModel.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface DetailViewController ()
 
@@ -19,6 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self organiseData];
+    self.activeFriends = @[];
+    self.friends = @[];
+    self.friendsTableView.contentInset = UIEdgeInsetsZero;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.outputDate.text = @"";
     self.outputValue.text = @"";
     self.selectedFilter = 0;
@@ -32,6 +38,7 @@
     self.barChartView.layer.borderColor = [AppDelegate colorFromHexString:@"#444444"].CGColor;
     self.barChartView.layer.borderWidth = 1;
     self.barChartView.backgroundColor = [AppDelegate colorFromHexString:@"#333333"];
+    self.friendsTableView.hidden = YES;
     [self setBarFrame];
 }
 
@@ -186,9 +193,82 @@
 }
 
 - (IBAction)filterTapped:(id)sender {
-    NSLog(@"FILTER TAPPED");
     self.selectedFilter = (int)[self.filter selectedSegmentIndex];
     [self.barChartView reloadDataAnimated:YES];
+    if (self.selectedFilter == 3) {
+        self.barChartView.hidden = YES;
+        self.friendsTableView.hidden = NO;
+        [self loadFriends];
+    } else {
+        self.barChartView.hidden = NO;
+        self.friendsTableView.hidden = YES;
+    }
 }
+
+- (IBAction)backTapped:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark Friends
+
+- (void)loadFriends {
+    [[AppModel sharedModel] getFriendsWithSuccess:^(NSArray *data) {
+        self.friends = data;
+        [self.friendsTableView reloadData];
+    } andFailure:^{
+        NSLog(@"FAILED");
+    }];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80.0f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(section == 0) {
+        return self.activeFriends.count;
+    } else {
+        return self.friends.count;
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    /* Create custom view to display section header... */
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+    [label setFont:[UIFont boldSystemFontOfSize:12]];
+    NSString *string = @"ZING";
+    if (section == 0) {
+        string = @"COMPETING FRIENDS";
+    } else {
+        string = @"OTHER FRIENDS";
+    }
+    [label setText:string];
+    [view addSubview:label];
+    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
+    return view;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *data = @{};
+    if (indexPath.section == 0) {
+        data = [self.activeFriends objectAtIndex:indexPath.row];
+    } else {
+        data = [self.friends objectAtIndex:indexPath.row];
+    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendCell" forIndexPath:indexPath];
+    UILabel *name = (UILabel *)[cell viewWithTag:1];
+    UIImageView *avatar = (UIImageView *)[cell viewWithTag:2];
+    NSString *url = [[[data objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+    [avatar setImageWithURL:[NSURL URLWithString:url]];
+    name.text = [data objectForKey:@"name"];
+    return cell;
+}
+
 
 @end
