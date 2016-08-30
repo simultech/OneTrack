@@ -107,6 +107,18 @@
     NSLog(@"ADDING NEW");
     [self setItems:[mutableItems copy]];
     [self save];
+    //API call
+    CGFloat r,g,b,a;
+    [color getRed:&r green:&g blue: &b alpha: &a];
+    int rInt = (int)(255.0 * r);
+    int gInt = (int)(255.0 * g);
+    int bInt = (int)(255.0 * b);
+
+    NSString *hexString = [NSString stringWithFormat:@"%02x.%02x.%02x", rInt, gInt, bInt];
+    NSLog(@"hexstring %@", hexString);
+    
+//    [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:hexString];
+
 }
 
 -(void)updateTrackerWithId:(NSString *)id withName:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
@@ -276,7 +288,7 @@
 
 
 -(void)addUser{
-    [[AppModel sharedModel] verifyLoginWithSuccess:^{
+    [self verifyLoginWithSuccess:^{
         NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
         NSLog(@"THESE ARE THE USERS DETAILS%@",userDetails);
 
@@ -290,29 +302,43 @@
         }];
     } andFailure:nil];
 }
+
+-(void)createTrackerWithName:(NSString *)name andMaxCount:(NSString *)maxCount andColor:(NSString *)color{
+    NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
+    [data setObject:name forKey:@"name"];
+    [data setObject:maxCount forKey:@"max_count"];
+    [data setObject:color forKey:@"color"];
+    [self callAPIWithPostWithEndpoint:@"create_tracker" andParameters:data andSuccess:^(id response) {
+        NSLog(@"createTracker %@", response);
+    } andFailure:^(NSError *error) {
+        NSLog(@"createTracker ERROR %@", error);
+    }];
+}
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
     NSString *endpoint = [self endpointWithString:URLString];
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    NSLog(@"hasInternet %d", hasInternetConnection);
-//    if (hasInternetConnection) {
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+//    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+//    NSLog(@"hasInternet %d", hasInternetConnection);
 
-        NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:endpoint parameters:parameters error:nil];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
 
-        NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-            if (error) {
-                NSLog(@"Error: %@", error);
-                failure(error);
-            } else {
-                NSLog(@"%@ %@", response, responseObject);
-                success(responseObject);
-            }
-        }];
-        [dataTask resume];
-//    }else{
-//        NSLog(@"no internet");
-//    }
+    NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:endpoint parameters:parameters error:nil];
+
+
+    //THE API CALL
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+            failure(error);
+        } else {
+            NSLog(@"%@ %@", response, responseObject);
+            success(responseObject);
+        }
+    }];
+    [dataTask resume];
+
 }
 
 -(NSString *)endpointWithString:(NSString *)endpoint{

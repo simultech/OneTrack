@@ -39,6 +39,7 @@
 
 //API Methods
 -(void)addUser;
+-(void)createTrackerWithName:(NSString *)name andMaxCount:(NSString *)maxCount;
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure;
 
 
