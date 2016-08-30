@@ -10,6 +10,7 @@ return success
 	'fb_id':111
 	'name': 'string',
 	'max_count': 4,
+	'tracker_id':'somestringid'
 }
 returns: success and id generated on server
 // get_trackers - Get trackers for a user

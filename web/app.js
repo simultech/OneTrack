@@ -97,6 +97,7 @@ app.post('/create_tracker', function (req, res) {
   trackerDict.deleted = false;
   trackerDict.count = [];
   trackerDict.color = req.body.color;
+  trackerDict.tracker_id = req.body.tracker_id
   var insertTracker = function(db, callback, error) {
     console.log("trackerDict", trackerDict);
     db.collection('users').updateOne(
