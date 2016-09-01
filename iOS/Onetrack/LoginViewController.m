@@ -36,6 +36,26 @@
     } andFailure:^{
         self.backButtonImage.hidden = YES;
     }];
+    [self setupInstructions];
+}
+
+- (void)setupInstructions {
+    [self.instructionScrollView setBackgroundColor:[UIColor colorWithRed:0.282 green:0.282 blue:0.282 alpha:1]];
+    NSLog(@"JJJ %f", self.instructionScrollView.frame.size.width);
+    int screens = 6;
+    int pageWidth = 370;
+    self.instructionScrollView.contentSize = CGSizeMake(pageWidth*screens, self.instructionScrollView.frame.size.height);
+    for (int i=0; i<screens; i++) {
+        NSString *screenName = [NSString stringWithFormat:@"screen_%d", (i+1)];
+        UIImageView *screen = [[UIImageView alloc] initWithImage:[UIImage imageNamed:screenName]];
+        CGRect screenSize = self.instructionScrollView.frame;
+        screenSize.size.width = pageWidth;
+        screenSize.origin.x = i*pageWidth;
+        screenSize.origin.y = 0;
+        screen.frame = screenSize;
+        [screen setContentMode:UIViewContentModeScaleAspectFit];
+        [self.instructionScrollView addSubview:screen];
+    }
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

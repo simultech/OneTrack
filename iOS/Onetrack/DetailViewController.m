@@ -21,6 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.data = [[AppModel sharedModel] getDataForTrackerID:self.tracker_id];
     [self organiseData];
     self.activeFriends = @[];
     self.friends = @[];
@@ -39,11 +44,6 @@
     self.barChartView.layer.borderWidth = 1;
     self.barChartView.backgroundColor = [AppDelegate colorFromHexString:@"#333333"];
     self.friendsTableView.hidden = YES;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.data = [[AppModel sharedModel] getDataForTrackerID:self.tracker_id];
     self.title = [self.data objectForKey:@"name"];
     [self setBarFrame];
 }

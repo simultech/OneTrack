@@ -153,6 +153,11 @@
     }
 }
 
+- (IBAction)refresh:(UIRefreshControl *)sender {
+    [self.tableView reloadData];
+    [sender endRefreshing];
+}
+
 - (IBAction)editingClicked:(id)sender {
     if([self.tableView isEditing]) {
         

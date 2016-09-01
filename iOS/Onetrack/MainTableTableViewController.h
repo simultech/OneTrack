@@ -13,6 +13,7 @@
 @interface MainTableTableViewController : UITableViewController <CreationViewControllerDelegate, DetailViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+- (IBAction)refresh:(UIRefreshControl *)sender;
 
 - (IBAction)editingClicked:(id)sender;
 
