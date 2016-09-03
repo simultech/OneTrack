@@ -242,7 +242,7 @@ app.post('/count_up_tracker', function (req, res) {
 });
 // count_down_tracker - Remove a count for a tracker
 app.post('/count_down_tracker', function (req, res) {
-  console.log("This is count_down_tracker request", requestq.body);
+  console.log("This is count_down_tracker request", req.body);
   //1. query to insert the user
   
   var countDownTracker = function(db, callback, error) {
