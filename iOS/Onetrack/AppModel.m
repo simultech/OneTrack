@@ -89,7 +89,6 @@
     if([maxCount integerValue] == 0 || [maxCount longValue] > [self getTodayCount:clicks]) {
         NSString *date = [self stringFromDate:now];
         [clicks addObject:date];
-        NSLog(@"here %@",[clicks copy]);
         [item setObject:[clicks copy] forKey:@"clicks"];
         [mutableItems replaceObjectAtIndex:index withObject:[item copy]];
         [self setItems:[mutableItems copy]];
@@ -107,10 +106,12 @@
     NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
     NSNumber *maxCount = [item objectForKey:@"maxCount"];
     if(clicks.count > 0 && ([maxCount integerValue] == 0 || [self getTodayCount:clicks] > 0)) {
+        NSString *clickValue = [[clicks lastObject]copy];
         [clicks removeObjectAtIndex:clicks.count-1];
         [item setObject:[clicks copy] forKey:@"clicks"];
         [mutableItems replaceObjectAtIndex:index withObject:[item copy]];
         [self setItems:[mutableItems copy]];
+        [self countDownTrackerWithId:[item objectForKey:@"tracker_id"] andClickValue:clickValue];
     }
     [self save];
 }
@@ -346,6 +347,23 @@
         NSLog(@"count_up_tracker ERROR %@", error);
     }];
 }
+
+-(void)countDownTrackerWithId:(NSString *)trackerID andClickValue:(NSString *)clickValue{
+    //params: fb_id, track_id, click_value
+    NSLog(@"countDownTrackerWithId %@", trackerID);
+    NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
+    [data setObject:trackerID forKey:@"tracker_id"];
+    [data setObject:clickValue forKey:@"click_value"];
+    [self callAPIWithPostWithEndpoint:@"count_down_tracker" andParameters:data andSuccess:^(id response) {
+        NSLog(@"count_down_tracker %@", response);
+    } andFailure:^(NSError *error) {
+        NSLog(@"count_down_tracker ERROR %@", error);
+    }];
+}
+
+
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
     
     self.currentOperations += 1;
