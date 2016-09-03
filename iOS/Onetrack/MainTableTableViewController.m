@@ -19,6 +19,7 @@
 @implementation MainTableTableViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [[AppModel sharedModel] restore];
     
@@ -154,8 +155,16 @@
 }
 
 - (IBAction)refresh:(UIRefreshControl *)sender {
-    [self.tableView reloadData];
-    [sender endRefreshing];
+    NSLog(@"START LOAD");
+    [[AppModel sharedModel] getTrackersFromServerWithSuccess:^(id response) {
+        NSLog(@"FINISH LOAD");
+        [self.tableView reloadData];
+        [sender endRefreshing];
+    } andFailure:^(NSError *error) {
+        NSLog(@"FAILED %@", error);
+        [UIAlertController alertControllerWithTitle:@"Error" message:@"Could not sync with server" preferredStyle:UIAlertControllerStyleAlert];
+        [sender endRefreshing];
+    }];
 }
 
 - (IBAction)editingClicked:(id)sender {

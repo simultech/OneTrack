@@ -13,8 +13,8 @@
 #define hasInternetConnection \
 [AFNetworkReachabilityManager sharedManager].reachable
 
-//#define APIString @"http://habitcount.com"
-#define APIString @"http://0.0.0.0"
+#define APIString @"http://habitcount.com"
+//#define APIString @"http://0.0.0.0"
 @implementation AppModel
 
 + (id)sharedModel {
@@ -22,6 +22,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedAppModel = [[self alloc] init];
+        sharedAppModel.currentOperations = 0;
     });
     return sharedAppModel;
 }
@@ -87,13 +88,15 @@
     NSDate *now = [NSDate date];
     if([maxCount integerValue] == 0 || [maxCount longValue] > [self getTodayCount:clicks]) {
         [clicks addObject:[self stringFromDate:now]];
+        NSLog(@"%@",item);
         [item setObject:[clicks copy] forKey:@"clicks"];
         [mutableItems replaceObjectAtIndex:index withObject:[item copy]];
         [self setItems:[mutableItems copy]];
         [self save];
         completed = YES;
     }
-    return completed;
+//    return completed;
+    return YES;
 }
 
 -(void)removeCountFromTracker:(int)index {
@@ -296,7 +299,6 @@
     }
 }
 
-
 -(void)addUser{
     [self verifyLoginWithSuccess:^{
         NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
@@ -328,6 +330,9 @@
     }];
 }
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
+    
+    self.currentOperations += 1;
+    
     NSString *endpoint = [self endpointWithString:URLString];
 
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -339,15 +344,68 @@
     //THE API CALL
     NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
         if (error) {
+            self.currentOperations -= 1;
             NSLog(@"Error: %@", error);
             failure(error);
         } else {
+            self.currentOperations -= 1;
             NSLog(@"%@ %@", response, responseObject);
             success(responseObject);
         }
     }];
     [dataTask resume];
+}
 
+-(void)getTrackersFromServerWithSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
+    
+    NSLog(@"GETTING TRACKERS ");
+    
+    if (self.currentOperations == 0) {
+    
+        NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+        
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+        
+        NSDictionary *params = @{@"fb_id": [userDetails objectForKey:@"user_id"]};
+        
+        NSString *endpoint = [self endpointWithString:@"get_trackers"];
+        
+        NSURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"GET" URLString:endpoint parameters:params error:nil];
+        
+        //THE API CALL
+        NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+            if (error) {
+                NSLog(@"FAILED");
+                NSLog(@"FIALED %@", responseObject);
+                NSLog(@"FIALED %@", error);
+                failure(error);
+            } else {
+                //Fix colours
+                NSMutableArray *newItems = [[responseObject objectForKey:@"trackers"] mutableCopy];
+                for(int i=0; i<newItems.count; i++) {
+                    NSMutableDictionary *item = [[newItems objectAtIndex:i] mutableCopy];
+                    NSString *colorString = [item objectForKey:@"color"];
+                    NSArray *components = [colorString componentsSeparatedByString:@"."];
+                    CGFloat r = [[components objectAtIndex:0] floatValue] / 255.0;
+                    CGFloat g = [[components objectAtIndex:1] floatValue] / 255.0;
+                    CGFloat b = [[components objectAtIndex:2] floatValue] / 255.0;
+                    UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1.0];
+                    [item setObject:color forKey:@"color"];
+                    [newItems replaceObjectAtIndex:i withObject:item];
+                }
+                self.items = [newItems copy];
+                NSLog(@"%@", self.items);
+                [self save];
+                success(responseObject);
+            }
+        }];
+        [dataTask resume];
+        
+    } else {
+        NSLog(@"FAILED SOMETHING HAPPENING");
+    }
+    
 }
 
 -(NSString *)endpointWithString:(NSString *)endpoint{

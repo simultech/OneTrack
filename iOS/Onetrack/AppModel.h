@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) WCSession *session;
 @property (nonatomic, strong) NSArray *items;
+@property (atomic, assign) int currentOperations;
 
 + (id)sharedModel;
 
@@ -40,6 +41,7 @@
 
 //API Methods
 -(void)addUser;
+-(void)getTrackersFromServerWithSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure;
 
 
 

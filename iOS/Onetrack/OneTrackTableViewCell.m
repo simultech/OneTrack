@@ -17,9 +17,17 @@
 }
 
 - (void)initCellWithData:data {
+    
     BOOL new = NO;
     if(![[data objectForKey:@"name"] isEqualToString:[self.data objectForKey:@"name"]]) {
         new = YES;
+    }
+    
+    
+    if (![data objectForKey:@"maxCount"] || ![[data objectForKey:@"maxCount"] isKindOfClass:[NSNumber class]]) {
+        NSMutableDictionary *mutData = [data mutableCopy];
+        [mutData setObject:@0 forKey:@"maxCount"];
+        data = [mutData copy];
     }
     self.data = data;
     [self redraw:new];
@@ -40,6 +48,9 @@
     }
     
     itemLabel.text = [self.data objectForKey:@"name"];
+    if (!maxCount) {
+        maxCount = @0;
+    }
     if([maxCount integerValue] == 0) {
         todayLabel.text = [NSString stringWithFormat:@"%ld", [[AppModel sharedModel] getTodayCount:[self.data objectForKey:@"clicks"]]];
     } else {
