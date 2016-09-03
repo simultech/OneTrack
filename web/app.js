@@ -132,7 +132,7 @@ app.get('/get_trackers', function (req, res) {
   console.log("This is get_trackers request", req.query);
   
   var getTrackers = function(db, callback, error) {
-    var cursor =db.collection('users').find( { "fb_id": "_"+req.query.fb_id } );
+    var cursor =db.collection('users').find( { "fb_id": "_"+req.query.fb_id, "tracks.deleted":false} );
     cursor.nextObject(function(err, doc) {
       assert.equal(err, null);
       if (doc !== null) {
@@ -242,7 +242,7 @@ app.post('/count_up_tracker', function (req, res) {
 });
 // count_down_tracker - Remove a count for a tracker
 app.post('/count_down_tracker', function (req, res) {
-  console.log("This is count_down_tracker request", req.body);
+  console.log("This is count_down_tracker request", requestq.body);
   //1. query to insert the user
   
   var countDownTracker = function(db, callback, error) {
