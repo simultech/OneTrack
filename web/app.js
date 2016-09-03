@@ -93,11 +93,16 @@ app.post('/create_tracker', function (req, res) {
   var trackerDict = {};
   trackerDict.id = shortid.generate();
   trackerDict.name = req.body.name;
-  trackerDict.max_count = req.body.max_count;
+  var max_count = req.body.max_count;
+  if(max_count){
+    trackerDict.max_count = req.body.max_count;  
+  }else{
+    trackerDict.max_count = 0;
+  }
   trackerDict.deleted = false;
   trackerDict.count = [];
   trackerDict.color = req.body.color;
-  trackerDict.tracker_id = req.body.tracker_id
+  trackerDict.tracker_id = req.body.tracker_id;
   var insertTracker = function(db, callback, error) {
     console.log("trackerDict", trackerDict);
     db.collection('users').updateOne(
