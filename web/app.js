@@ -162,7 +162,7 @@ app.post('/edit_tracker', function (req, res) {
   
   var editTracker = function(db, callback, error) {
     db.collection('users').updateOne(
-      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {"fb_id":"_"+req.body.fb_id, "tracks.tracker_id":req.body.tracker_id},//get object with fb_id
       {$set:{"tracks.$.name":req.body.name, "tracks.$.max_count":req.body.max_count}}, //push to tracks
       function(err, result) {
         if(err !== null) {
@@ -191,7 +191,7 @@ app.post('/delete_tracker', function (req, res) {
   
   var deleteTracker = function(db, callback, error) {
     db.collection('users').updateOne(
-      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {"fb_id":"_"+req.body.fb_id, "tracks.tracker_id":req.body.tracker_id},//get object with fb_id
       {$set:{"tracks.$.deleted":true}}, //push to tracks
       function(err, result) {
         if(err !== null) {
@@ -220,7 +220,7 @@ app.post('/count_up_tracker', function (req, res) {
   
   var countUpTracker = function(db, callback, error) {
     db.collection('users').updateOne(
-      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {"fb_id":"_"+req.body.fb_id, "tracks.tracker_id":req.body.tracker_id},//get object with fb_id
       {$push:{"tracks.$.clicks":req.body.click_value}}, //push to tracks
       function(err, result) {
         if(err !== null) {
@@ -247,7 +247,7 @@ app.post('/count_down_tracker', function (req, res) {
   
   var countDownTracker = function(db, callback, error) {
     db.collection('users').updateOne(
-      {"fb_id":"_"+req.body.fb_id, "tracks.id":req.body.track_id},//get object with fb_id
+      {"fb_id":"_"+req.body.fb_id, "tracks.tracker_id":req.body.tracker_id},//get object with fb_id
       {$pull:{"tracks.$.clicks":req.body.click_value}}, //push to tracks
       function(err, result) {
         if(err !== null) {
