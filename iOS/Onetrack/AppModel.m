@@ -14,7 +14,7 @@
 [AFNetworkReachabilityManager sharedManager].reachable
 
 #define APIString @"http://habitcount.com"
-//#define APIString @"http://0.0.0.0"
+//#define APIString @"http://localhost"
 @implementation AppModel
 
 + (id)sharedModel {
@@ -87,13 +87,15 @@
     NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
     NSDate *now = [NSDate date];
     if([maxCount integerValue] == 0 || [maxCount longValue] > [self getTodayCount:clicks]) {
-        [clicks addObject:[self stringFromDate:now]];
-        NSLog(@"%@",item);
+        NSString *date = [self stringFromDate:now];
+        [clicks addObject:date];
+        NSLog(@"here %@",[clicks copy]);
         [item setObject:[clicks copy] forKey:@"clicks"];
         [mutableItems replaceObjectAtIndex:index withObject:[item copy]];
         [self setItems:[mutableItems copy]];
         [self save];
         completed = YES;
+        [self countUpTrackerWithId:[item objectForKey:@"tracker_id"] andClickValue:date];
     }
 //    return completed;
     return YES;
@@ -327,6 +329,21 @@
         NSLog(@"createTracker %@", response);
     } andFailure:^(NSError *error) {
         NSLog(@"createTracker ERROR %@", error);
+    }];
+}
+
+-(void)countUpTrackerWithId:(NSString *)trackerID andClickValue:(NSString *)clickValue{
+    //params: fb_id, track_id, click_value
+    NSLog(@"countUpTrackerWithId %@, %@", trackerID, clickValue);
+    NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
+    [data setObject:trackerID forKey:@"tracker_id"];
+    [data setObject:clickValue forKey:@"click_value"];
+    [self callAPIWithPostWithEndpoint:@"count_up_tracker" andParameters:data andSuccess:^(id response) {
+        NSLog(@"count_up_tracker %@", response);
+    } andFailure:^(NSError *error) {
+        NSLog(@"count_up_tracker ERROR %@", error);
     }];
 }
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
