@@ -254,6 +254,7 @@
              [defaults setObject:result[@"id"] forKey:@"user_id"];
              [defaults setObject:result[@"name"] forKey:@"user_name"];
              [defaults setObject:result[@"email"] forKey:@"user_email"];
+             NSLog(@"FB ID: %@", result[@"id"]);
              [defaults synchronize];
              success();
          } else {
