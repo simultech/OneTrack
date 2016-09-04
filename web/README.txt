@@ -40,9 +40,9 @@ and : sudo grunt
 
 
 on server
-cd web
+cd web or cd /var/www/OneTrack/web#
 *** to restart
-cd /etc/init#
+cd /etc/init
 service onetrack restart
 
 
