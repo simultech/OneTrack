@@ -116,6 +116,16 @@
     [self save];
 }
 
+
+-(NSString *)convertUIColorToString:(UIColor *)color{
+    CGFloat r,g,b,a;
+    [color getRed:&r green:&g blue: &b alpha: &a];
+    int rInt = (int)(255.0 * r);
+    int gInt = (int)(255.0 * g);
+    int bInt = (int)(255.0 * b);
+    NSString *rgbString = [NSString stringWithFormat:@"%d.%d.%d", rInt, gInt, bInt];
+    return rgbString;
+}
 -(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
     NSMutableArray *mutableItems = [[[AppModel sharedModel] items] mutableCopy];
     NSString *tracker_id = [AppModel uuid];
@@ -125,17 +135,11 @@
     [self setItems:[mutableItems copy]];
     [self save];
 
-
     //API call
-    CGFloat r,g,b,a;
-    [color getRed:&r green:&g blue: &b alpha: &a];
-    int rInt = (int)(255.0 * r);
-    int gInt = (int)(255.0 * g);
-    int bInt = (int)(255.0 * b);
-    NSString *hexString = [NSString stringWithFormat:@"%d.%d.%d", rInt, gInt, bInt];
-    [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:hexString andTrackerID:tracker_id];
-
+    [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:[self convertUIColorToString:color] andTrackerID:tracker_id];
 }
+
+
 //TODO: do api call
 -(void)updateTrackerWithId:(NSString *)id withName:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
     NSMutableArray *mutableItems = [[self items] mutableCopy];
@@ -151,8 +155,8 @@
     [self setItems:[mutableItems copy]];
     [self save];
     NSLog(@"UPDATING TRACKER");
+    [self editTrackerWithId:id withName:name withMaxUse:[usePerDay stringValue] withColor:[self convertUIColorToString:color]];
 }
-//TODO: do api call
 -(void)deleteTracker:(int)index {
     NSMutableArray *mutableItems = [[self items] mutableCopy];
     NSDictionary *itemToBeDeleted = [[mutableItems objectAtIndex:index]copy];
@@ -304,7 +308,10 @@
          ];
     }
 }
-
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// API METHODS ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+#pragma mark API METHODS
 -(void)addUser{
     [self verifyLoginWithSuccess:^{
         NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
@@ -363,6 +370,21 @@
         NSLog(@"count_down_tracker %@", response);
     } andFailure:^(NSError *error) {
         NSLog(@"count_down_tracker ERROR %@", error);
+    }];
+}
+
+-(void)editTrackerWithId:(NSString *)trackerID withName:(NSString *)name withMaxUse:(NSString *)maxCount withColor:(NSString *)color{
+    NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
+    [data setObject:trackerID forKey:@"tracker_id"];
+    [data setObject:name forKey:@"name"];
+    [data setObject:maxCount forKey:@"max_count"];
+    [data setObject:color forKey:@"color"];
+    [self callAPIWithPostWithEndpoint:@"edit_tracker" andParameters:data andSuccess:^(id response) {
+        NSLog(@"edit_tracker %@", response);
+    } andFailure:^(NSError *error) {
+        NSLog(@"edit_tracker ERROR %@", error);
     }];
 }
 
@@ -458,7 +480,6 @@
     } else {
         NSLog(@"FAILED SOMETHING HAPPENING");
     }
-    
 }
 
 -(NSString *)endpointWithString:(NSString *)endpoint{
