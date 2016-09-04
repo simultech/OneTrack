@@ -132,7 +132,7 @@
     int rInt = (int)(255.0 * r);
     int gInt = (int)(255.0 * g);
     int bInt = (int)(255.0 * b);
-    NSString *hexString = [NSString stringWithFormat:@"%02x.%02x.%02x", rInt, gInt, bInt];
+    NSString *hexString = [NSString stringWithFormat:@"%d.%d.%d", rInt, gInt, bInt];
     [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:hexString andTrackerID:tracker_id];
 
 }
