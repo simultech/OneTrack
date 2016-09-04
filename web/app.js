@@ -136,12 +136,18 @@ app.get('/get_trackers', function (req, res) {
   console.log("This is get_trackers request", req.query);
   
   var getTrackers = function(db, callback, error) {
-    var cursor =db.collection('users').find( { "fb_id": "_"+req.query.fb_id, "tracks.deleted":false} );
+    var cursor =db.collection('users').find( { "fb_id": "_"+req.query.fb_id} );
     cursor.nextObject(function(err, doc) {
       assert.equal(err, null);
       if (doc !== null) {
-        // console.dir('tracks', doc);
-        callback(doc.tracks);
+        var newTracks = [];
+        for(var t in doc.tracks) {
+          if (!doc.tracks[t].deleted) {
+            newTracks.push(doc.tracks[t]);
+          }
+        }
+        console.log("non deleted tracks", newTracks);
+        callback(newTracks);
       } else {
          error(err);
       }
