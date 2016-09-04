@@ -46,10 +46,10 @@
         NSDictionary* dataObj = [self.state objectAtIndex:i];
         NSString *itemText = [dataObj objectForKey:@"name"];
         long todayCount = [self getTodayCount:[dataObj objectForKey:@"clicks"]];
-        if([[dataObj objectForKey:@"maxCount"] integerValue] == 0) {
+        if([[dataObj objectForKey:@"max_count"] integerValue] == 0) {
             itemText = [NSString stringWithFormat:@"%@ (%ld)", itemText, todayCount];
         } else {
-            itemText = [NSString stringWithFormat:@"%@ (%ld / %@)", itemText, todayCount, [dataObj objectForKey:@"maxCount"]];
+            itemText = [NSString stringWithFormat:@"%@ (%ld / %@)", itemText, todayCount, [dataObj objectForKey:@"max_count"]];
         }
         [theRow.label setText:itemText];
     }

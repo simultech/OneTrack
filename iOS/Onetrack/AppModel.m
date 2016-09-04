@@ -83,7 +83,7 @@
     BOOL completed = NO;
     NSMutableArray *mutableItems = [self.items mutableCopy];
     NSMutableDictionary *item = [[mutableItems objectAtIndex:index] mutableCopy];
-    NSNumber *maxCount = [item objectForKey:@"maxCount"];
+    NSNumber *maxCount = [item objectForKey:@"max_count"];
     NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
     NSDate *now = [NSDate date];
     if([maxCount integerValue] == 0 || [maxCount longValue] > [self getTodayCount:clicks]) {
@@ -104,7 +104,7 @@
     NSMutableArray *mutableItems = [self.items mutableCopy];
     NSMutableDictionary *item = [[mutableItems objectAtIndex:index] mutableCopy];
     NSMutableArray *clicks = [[item objectForKey:@"clicks"] mutableCopy];
-    NSNumber *maxCount = [item objectForKey:@"maxCount"];
+    NSNumber *maxCount = [item objectForKey:@"max_count"];
     if(clicks.count > 0 && ([maxCount integerValue] == 0 || [self getTodayCount:clicks] > 0)) {
         NSString *clickValue = [[clicks lastObject]copy];
         [clicks removeObjectAtIndex:clicks.count-1];
@@ -119,7 +119,7 @@
 -(void)addTracker:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
     NSMutableArray *mutableItems = [[[AppModel sharedModel] items] mutableCopy];
     NSString *tracker_id = [AppModel uuid];
-    NSDictionary *item = @{@"tracker_id": tracker_id, @"name" : name, @"clicks" : @[], @"maxCount": usePerDay, @"color": color};
+    NSDictionary *item = @{@"tracker_id": tracker_id, @"name" : name, @"clicks" : @[], @"max_count": usePerDay, @"color": color};
     [mutableItems addObject:item];
     NSLog(@"ADDING NEW");
     [self setItems:[mutableItems copy]];
@@ -143,7 +143,7 @@
         if([id isEqualToString:[[mutableItems objectAtIndex:i] objectForKey:@"tracker_id"]]) {
             NSMutableDictionary *mutableItem = [[mutableItems objectAtIndex:i] mutableCopy];
             [mutableItem setObject:name forKey:@"name"];
-            [mutableItem setObject:usePerDay forKey:@"maxCount"];
+            [mutableItem setObject:usePerDay forKey:@"max_count"];
             [mutableItem setObject:color forKey:@"color"];
             [mutableItems replaceObjectAtIndex:i withObject:mutableItem];
         }
@@ -428,10 +428,14 @@
                     CGFloat b = [[components objectAtIndex:2] floatValue] / 255.0;
                     UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1.0];
                     [item setObject:color forKey:@"color"];
+                    
+                    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+                    f.numberStyle = NSNumberFormatterNoStyle;
+                    NSNumber *maxCountNumber = [f numberFromString:[item objectForKey:@"max_count"]];
+                    [item setObject:maxCountNumber forKey:@"max_count"];
                     [newItems replaceObjectAtIndex:i withObject:item];
                 }
                 self.items = [newItems copy];
-                NSLog(@"%@", self.items);
                 [self save];
                 success(responseObject);
             }

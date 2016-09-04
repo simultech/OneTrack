@@ -24,9 +24,9 @@
     }
     
     
-    if (![data objectForKey:@"maxCount"] || ![[data objectForKey:@"maxCount"] isKindOfClass:[NSNumber class]]) {
+    if (![data objectForKey:@"max_count"] || ![[data objectForKey:@"max_count"] isKindOfClass:[NSNumber class]]) {
         NSMutableDictionary *mutData = [data mutableCopy];
-        [mutData setObject:@0 forKey:@"maxCount"];
+        [mutData setObject:@0 forKey:@"max_count"];
         data = [mutData copy];
     }
     self.data = data;
@@ -35,7 +35,7 @@
 
 - (void)redraw:(BOOL)new {
     
-    NSNumber *maxCount = [self.data objectForKey:@"maxCount"];
+    NSNumber *maxCount = [self.data objectForKey:@"max_count"];
     UILabel *itemLabel = (UILabel *)[self viewWithTag:1];
     UILabel *todayLabel = (UILabel *)[self viewWithTag:2];
     UILabel *lastAdded = (UILabel *)[self viewWithTag:5];

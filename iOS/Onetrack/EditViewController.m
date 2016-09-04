@@ -19,7 +19,7 @@
     [super viewDidLoad];
     NSLog(@"%@", self.data);
     self.nameTextField.text = [self.data objectForKey:@"name"];
-    self.maxTextField.text = [NSString stringWithFormat:@"%@", [self.data objectForKey:@"maxCount"]];
+    self.maxTextField.text = [NSString stringWithFormat:@"%@", [self.data objectForKey:@"max_count"]];
     // Do any additional setup after loading the view.
 }
 
