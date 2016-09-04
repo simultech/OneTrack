@@ -136,7 +136,7 @@
     [self createTrackerWithName:name andMaxCount:[usePerDay stringValue] andColor:hexString andTrackerID:tracker_id];
 
 }
-
+//TODO: do api call
 -(void)updateTrackerWithId:(NSString *)id withName:(NSString *)name withMaxUse:(NSNumber *)usePerDay withColor:(UIColor *)color {
     NSMutableArray *mutableItems = [[self items] mutableCopy];
     for(int i=0; i<mutableItems.count; i++) {
@@ -152,12 +152,14 @@
     [self save];
     NSLog(@"UPDATING TRACKER");
 }
-
+//TODO: do api call
 -(void)deleteTracker:(int)index {
     NSMutableArray *mutableItems = [[self items] mutableCopy];
+    NSDictionary *itemToBeDeleted = [[mutableItems objectAtIndex:index]copy];
     [mutableItems removeObjectAtIndex:index];
     [self setItems:[mutableItems copy]];
     [self save];
+    [self deleteTrackerWithId:[itemToBeDeleted objectForKey:@"tracker_id"]];
 }
 
 -(void)resetTracker:(int)index {
@@ -364,6 +366,18 @@
     }];
 }
 
+-(void)deleteTrackerWithId:(NSString *)trackerID{
+    NSDictionary *userDetails = [[AppModel sharedModel] getUserDetails];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:[userDetails objectForKey:@"user_id"] forKey:@"fb_id"];
+    [data setObject:trackerID forKey:@"tracker_id"];
+    [self callAPIWithPostWithEndpoint:@"delete_tracker" andParameters:data andSuccess:^(id response) {
+        NSLog(@"delete_tracker %@", response);
+    } andFailure:^(NSError *error) {
+        NSLog(@"delete_tracker ERROR %@", error);
+    }];
+}
+
 
 -(void)callAPIWithPostWithEndpoint:(NSString *)URLString andParameters:(NSDictionary *)parameters andSuccess:(void(^)(id response))success andFailure:(void(^)(NSError *error))failure{
     
@@ -441,7 +455,6 @@
             }
         }];
         [dataTask resume];
-        
     } else {
         NSLog(@"FAILED SOMETHING HAPPENING");
     }
